@@ -9,3 +9,9 @@ export interface GeolocationState {
   loadingGeolocation: boolean;
   permissionDenied: boolean;
 }
+
+export interface UseAxiosResponse {
+  data: unknown;
+  loading: boolean;
+  error: Error | null;
+}
