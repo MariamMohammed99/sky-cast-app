@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Coordinates, GeolocationState } from '../common/interfaces';
+import { Coordinates, GeolocationState } from '../interfaces';
 
 const useGeolocation = (): GeolocationState => {
   const [coordinates, setCoordinates] = useState<Coordinates | null>(null);

@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { API_KEY, BASE_URL,  REQUEST_FORMAT } from './constants';
+import { API_KEY, WEATHER_BASE_URL,  REQUEST_FORMAT } from '../constants';
 
 const axiosInstance = axios.create({
-  baseURL: BASE_URL,
+  baseURL: WEATHER_BASE_URL,
   params: {
     key: API_KEY,
     format: REQUEST_FORMAT,

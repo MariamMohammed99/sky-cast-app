@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import useHttp from '../../hooks/useHttp';
-import { getWeatherParams } from '../../services/utils';
-import useGeolocation from '../../hooks/useGeolocation';
+import useHttp from '../../common/hooks/useHttp';
+import { getWeatherParams } from '../../common/utils/utils';
+import useGeolocation from '../../common/hooks/useGeolocation';
 
 const LandingDisplayPage = () => {
   const {

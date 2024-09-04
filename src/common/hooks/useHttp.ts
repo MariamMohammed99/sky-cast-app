@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { AxiosRequestConfig } from 'axios';
-import { UseAxiosResponse } from '../common/interfaces';
-import axiosInstance from '../services/api';
+import { UseAxiosResponse } from '../interfaces';
+import axiosInstance from '../../app/services/api';
 
 const useHttp = (
   url: string,
