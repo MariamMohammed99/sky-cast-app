@@ -1,3 +1,6 @@
+import { useMemo } from 'react';
+import useHttp from '../../hooks/useHttp';
+import { getWeatherParams } from '../../services/utils';
 import useGeolocation from '../../hooks/useGeolocation';
 
 const LandingDisplayPage = () => {
@@ -7,6 +10,16 @@ const LandingDisplayPage = () => {
     loadingGeolocation,
     permissionDenied,
   } = useGeolocation();
+  
+  const params = useMemo(
+    () => getWeatherParams(coordinates?.latitude, coordinates?.longitude, 2),
+    [coordinates?.latitude, coordinates?.longitude],
+  );
+  const { data: weatherResponse } = useHttp(params ? 'weather.ashx' : '', {
+    params,
+  });
+  console.log('weather response', weatherResponse);
+  console.log('coordinates', coordinates);
 
   if (loadingGeolocation) return <p>Loading...</p>;
   if (geolocationError)
