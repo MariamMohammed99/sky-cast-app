@@ -5,7 +5,7 @@ export const StyledTitleBar = styled.div`
   align-items: center;
   justify-content:space-between;
   width:80%;
-  padding-top:40px
+  padding-top:40px;
   }
 `;
 export const StyledTitleBarWrapper = styled.div`

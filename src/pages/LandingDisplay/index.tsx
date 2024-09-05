@@ -3,14 +3,31 @@ import useFetchData from '../../common/hooks/useFetchData';
 import useGeolocation from '../../common/hooks/useGeolocation';
 import DayTemperature from './components/DayTempContainer';
 import MainContainer from './components/MainContainer';
-import { StyledAppContainer, StyledTemperatureContainer } from './styled';
+import {
+  StyledLandingContainer,
+  StyledLandingHeader,
+  StyledLandingWrapper,
+  StyledTemperatureContainer,
+} from './styled';
 import { constructCityUrl } from '../../common/utils/constructCityUrl';
 import locationAxiosInstance from '../../app/services/locationApi';
 import { constructCurrentWeatherParams } from '../../common/utils/constructParams';
-import { ASTRONOMY_URL, CURRENT_WEATHER_URL } from '../../app/constants';
+import { CURRENT_WEATHER_URL } from '../../app/constants';
 import weatherAxiosInstance from '../../app/services/weatherApi';
+import { LocationData } from '../../common/interfaces';
+import { useNavigate } from 'react-router-dom';
 
 const LandingDisplayPage = () => {
+  const navigate = useNavigate();
+
+  const handleCityClick = () => {
+    const queryParams = new URLSearchParams({
+      latitude: coordinates!.latitude.toString(),
+      longitude: coordinates!.longitude.toString(),
+    }).toString();
+
+    navigate(`/dashboard?${queryParams}`);
+  };
   const { coordinates, geolocationError, loadingGeolocation, permissionDenied } = useGeolocation();
 
   const {
@@ -31,13 +48,6 @@ const LandingDisplayPage = () => {
     params: weatherParams,
   });
 
-  const {
-    data: astronomyData,
-    loading: loadingAstronomy,
-    error: errorAstronomy,
-  } = useFetchData(coordinates ? ASTRONOMY_URL : '', weatherAxiosInstance, {
-    params: weatherParams,
-  });
   // const params = useMemo(
   //   () => constructSearchParams(coordinates?.latitude, coordinates?.longitude),
   //   [coordinates?.latitude, coordinates?.longitude],
@@ -52,11 +62,9 @@ const LandingDisplayPage = () => {
 
   console.log('data', userLocationData);
   console.log('weatherData', weatherData);
-  console.log('astronomyData', astronomyData);
 
-  if (loadingGeolocation || loadingUserCity || loadingWeather || loadingAstronomy)
-    return <p>Fetching your coordinates</p>;
-  if (geolocationError || errorUserCity || errorWeather || errorAstronomy)
+  if (loadingGeolocation || loadingUserCity || loadingWeather) return <p>Fetching your coordinates</p>;
+  if (geolocationError || errorUserCity || errorWeather)
     return (
       <div>
         <p>{geolocationError}</p>
@@ -80,14 +88,19 @@ const LandingDisplayPage = () => {
   if (!coordinates) return <p>Coordinates not available.</p>;
 
   return (
-    <StyledAppContainer>
-      <MainContainer />
-      <StyledTemperatureContainer>
-        {Array.from({ length: 7 }).map((_, index) => (
-          <DayTemperature key={index} day={`Day ${index + 1}`} temperature={Math.floor(Math.random() * 30) + 15} />
-        ))}
-      </StyledTemperatureContainer>
-    </StyledAppContainer>
+    <StyledLandingWrapper>
+      <StyledLandingContainer>
+        <StyledLandingHeader>
+          <MainContainer userLocation={userLocationData as LocationData[]} onClick={handleCityClick} />
+          <MainContainer userLocation={userLocationData as LocationData[]} onClick={handleCityClick} />
+        </StyledLandingHeader>
+        <StyledTemperatureContainer>
+          {Array.from({ length: 7 }).map((_, index) => (
+            <DayTemperature key={index} day={`Day ${index + 1}`} temperature={Math.floor(Math.random() * 30) + 15} />
+          ))}
+        </StyledTemperatureContainer>
+      </StyledLandingContainer>
+    </StyledLandingWrapper>
   );
 };
 

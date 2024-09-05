@@ -1,7 +1,6 @@
+import { LocationData } from '../../../../common/interfaces';
+
 export interface MainContainerProps {
-    country?: string;
-    city?: string;
-    state?: string;
-    onClick?: () => void;
-  }
-  
+  userLocation: LocationData[];
+  onClick: () => void;
+}

@@ -38,6 +38,15 @@ export const constructHistoricalWeatherParams = (
   };
 };
 
+export const constructAstronomyParams = (latitude: string | null, longitude: string | null) => {
+  if (!latitude || !longitude) return null;
+  const canBeConverted = !isNaN(Number(latitude)) && !isNaN(Number(longitude));
+  if (!canBeConverted) return null;
+  return {
+    q: `${latitude},${longitude}`,
+  };
+};
+
 export const constructSearchParams = (
   latitude: number | undefined,
   longitude: number | undefined,

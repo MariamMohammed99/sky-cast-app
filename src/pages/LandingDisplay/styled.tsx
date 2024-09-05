@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-export const StyledAppContainer = styled.div`
+export const StyledLandingContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-
+  justify-content: space-between;
+  width: 80%;
   @media (max-width: 768px) {
     padding: 10px;
   }
@@ -19,16 +19,26 @@ export const StyledTemperatureContainer = styled.div`
   display: flex;
   gap: 15px;
   margin-top: 20px;
+  position: absolute;
+  margin-bottom: 30px;
+  bottom: 0;
 
   @media (max-width: 768px) {
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
   }
+`;
 
-  @media (max-width: 480px) {
-    flex-direction: column;
-    gap: 5px;
-    align-items: center;
-  }
+export const StyledLandingWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+`;
+
+export const StyledLandingHeader = styled.div`
+  display: flex;
+  justify-content:space-between;
+  width:100%;
 `;
