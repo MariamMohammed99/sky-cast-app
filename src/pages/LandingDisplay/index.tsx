@@ -1,13 +1,14 @@
 import { useMemo } from 'react';
 import useFetchData from '../../common/hooks/useFetchData';
 import useGeolocation from '../../common/hooks/useGeolocation';
-import DayTemperature from './components/DayTempContainer';
+// import DayTemperature from './components/DayTempContainer';
 import LocationContainer from './components/LocationContainer';
 import {
   StyledLandingContainer,
   StyledLandingHeader,
   StyledLandingWrapper,
-  StyledTemperatureContainer,
+  StyledLocationSearchWrapper,
+  // StyledTemperatureContainer,
 } from './styled';
 import { constructCityUrl } from '../../common/utils/constructCityUrl';
 import locationAxiosInstance from '../../app/services/locationApi';
@@ -82,15 +83,17 @@ const LandingDisplayPage = () => {
     <StyledLandingWrapper>
       <StyledLandingContainer>
         <StyledLandingHeader>
-          <LocationContainer userLocation={userLocationData as LocationData[]} onClick={handleCityClick} />
+          <StyledLocationSearchWrapper>
+            <LocationContainer userLocation={userLocationData as LocationData[]} onClick={handleCityClick} />
+            <Search userLocation={userLocationData as LocationData[]} />
+          </StyledLocationSearchWrapper>
           <LocationContainer userLocation={userLocationData as LocationData[]} onClick={handleCityClick} />
         </StyledLandingHeader>
-        <Search userLocation={userLocationData as LocationData[]} />
-        <StyledTemperatureContainer>
+        {/* <StyledTemperatureContainer>
           {Array.from({ length: 7 }).map((_, index) => (
             <DayTemperature key={index} day={`Day ${index + 1}`} temperature={Math.floor(Math.random() * 30) + 15} />
           ))}
-        </StyledTemperatureContainer>
+        </StyledTemperatureContainer> */}
       </StyledLandingContainer>
     </StyledLandingWrapper>
   );

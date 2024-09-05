@@ -11,3 +11,8 @@ export const StyledLocationContainer = styled.div`
     transform: scale(1.05);
   }
 `;
+
+export const StyledCountryHeader = styled.h3`
+  margin-top: 5px;
+  font-size: 1rem;
+`;

@@ -39,6 +39,14 @@ export const StyledLandingWrapper = styled.div`
 
 export const StyledLandingHeader = styled.div`
   display: flex;
-  justify-content:space-between;
-  width:100%;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+`;
+
+export const StyledLocationSearchWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:20px
 `;

@@ -11,5 +11,6 @@ export const GlobalStyle = createGlobalStyle`
         background: linear-gradient(45deg, ${DAY_COLOR},${NIGHT_COLOR});
         height: 100vh;
         width: 100vw;
+        font-family: sans-serif;
   }
 `;

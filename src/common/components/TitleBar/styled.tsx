@@ -19,7 +19,6 @@ export const StyledHeaderTitle = styled.h1`
   margin: 0;
   font-size: 2rem;
   color: white;
-  font-family: sans-serif;
   text-align: center;
 
   @media (max-width: 768px) {

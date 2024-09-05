@@ -1,5 +1,5 @@
 import { LocationContainerProps } from './interface';
-import { StyledLocationContainer } from './styled';
+import { StyledCountryHeader, StyledLocationContainer } from './styled';
 
 const LocationContainer: React.FC<LocationContainerProps> = ({ userLocation, onClick }) => {
   const { city, region, country } = userLocation[0];
@@ -9,9 +9,9 @@ const LocationContainer: React.FC<LocationContainerProps> = ({ userLocation, onC
   return (
     <StyledLocationContainer onClick={handleCityClick}>
       <h1>{city}</h1>
-      <h3>
+      <StyledCountryHeader>
         {region}, {country}
-      </h3>
+      </StyledCountryHeader>
     </StyledLocationContainer>
   );
 };
