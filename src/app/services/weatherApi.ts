@@ -9,9 +9,9 @@ const weatherAxiosInstance = axios.create({
   },
 });
 
-// weatherAxiosInstance.interceptors.response.use(
-//   (response) => response,
-//   (error) => Promise.reject(error),
-// );
+weatherAxiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {throw(error)},
+);
 
 export default weatherAxiosInstance;

@@ -14,4 +14,8 @@ export const LOCATION_BASE_URL = 'http://geodb-free-service.wirefreethought.com/
 export const GET_CITY_NAME_URL = 'locations/{{lat+long}}/nearbyCities'
 export const SEARCH_CITY_URL = 'cities'
 
+
+export const LIMIT_SEARCH_RESULTS = 4
+export const LIMIT_GET_CITY_NAME = 1
+
 //#endregion

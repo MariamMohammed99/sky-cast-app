@@ -2,11 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { UseAxiosResponse } from '../interfaces';
 
-const useFetchData = (
-  url: string,
-  config: AxiosRequestConfig,
-  axiosInstance: AxiosInstance
-): UseAxiosResponse => {
+const useFetchData = (url: string, axiosInstance: AxiosInstance, config?: AxiosRequestConfig): UseAxiosResponse => {
   const [data, setData] = useState<unknown>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
@@ -18,7 +14,7 @@ const useFetchData = (
       const response = await axiosInstance.get(url, config);
       setData(response.data);
     } catch (err) {
-      setError(err as Error);
+      setError(err as Error)
     } finally {
       setLoading(false);
     }

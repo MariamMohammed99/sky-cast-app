@@ -1,4 +1,5 @@
-import { SearchParams } from '../interfaces';
+import { LIMIT_SEARCH_RESULTS } from '../../app/constants';
+import { SearchRequestParams } from '../interfaces';
 
 export const constructCurrentWeatherParams = (
   latitude: number | undefined,
@@ -18,11 +19,11 @@ export const constructCurrentWeatherParams = (
 export const constructSearchParams = (
   latitude: number | undefined,
   longitude: number | undefined,
-): SearchParams | null => {
+): SearchRequestParams | null => {
   if (!latitude || !longitude) return null;
   return {
     namePrefix: 'ca',
-    limit: 3,
+    limit: LIMIT_SEARCH_RESULTS,
     countryIds: 'eg',
   };
 };

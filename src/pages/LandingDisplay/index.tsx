@@ -1,27 +1,35 @@
-// import { useMemo } from 'react';
-// import { SEARCH_CITY_URL } from '../../app/constants';
-// import useFetchData from '../../common/hooks/useFetchData';
-// import { constructCurrentWeatherParams } from '../../common/utils/utils';
+import { useMemo } from 'react';
+import useFetchData from '../../common/hooks/useFetchData';
 import useGeolocation from '../../common/hooks/useGeolocation';
 import DayTemperature from './components/DayTempContainer';
 import MainContainer from './components/MainContainer';
 import { StyledAppContainer, StyledTemperatureContainer } from './styled';
-// import locationAxiosInstance from '../../app/services/locationApi';
-// import { constructSearchParams } from '../../common/utils/constructParams';
-// import { getLocationData } from '../../app/services/locationApi';
-// import { CURRENT_WEATHER_URL } from '../../app/constants';
+import { constructCityUrl } from '../../common/utils/constructCityUrl';
+import locationAxiosInstance from '../../app/services/locationApi';
+import { constructCurrentWeatherParams } from '../../common/utils/constructParams';
+import { CURRENT_WEATHER_URL } from '../../app/constants';
+import weatherAxiosInstance from '../../app/services/weatherApi';
 
 const LandingDisplayPage = () => {
   const { coordinates, geolocationError, loadingGeolocation, permissionDenied } = useGeolocation();
+  
+  const {
+    data: userLocationData,
+    loading: loadingUserCity,
+    error: errorUserCity,
+  } = useFetchData(constructCityUrl(coordinates?.latitude, coordinates?.longitude), locationAxiosInstance);
 
-  // const params = useMemo(
-  //   () => constructCurrentWeatherParams(coordinates?.latitude, coordinates?.longitude, 2),
-  //   [coordinates?.latitude, coordinates?.longitude],
-  // );
-  // const { data: weatherResponse } = useFetchData(params ? CURRENT_WEATHER_URL : '', {
-  //   params,
-  // });
-  // console.log('weather response', weatherResponse);
+  const weatherParams = useMemo(
+    () => constructCurrentWeatherParams(coordinates?.latitude, coordinates?.longitude, 2),
+    [coordinates],
+  );
+  const {
+    data: weatherData,
+    loading: loadingWeather,
+    error: errorWeather,
+  } = useFetchData(weatherParams ? 's'+CURRENT_WEATHER_URL : '', weatherAxiosInstance, {
+    params: weatherParams,
+  });
   // const params = useMemo(
   //   () => constructSearchParams(coordinates?.latitude, coordinates?.longitude),
   //   [coordinates?.latitude, coordinates?.longitude],
@@ -33,11 +41,13 @@ const LandingDisplayPage = () => {
   //   },
   //   locationAxiosInstance,
   // );
-  console.log('coordinates', coordinates);
-  // console.log('data', data);
 
-  if (loadingGeolocation) return <p>Fetching your coordinates</p>;
-  if (geolocationError)
+  console.log('data', userLocationData);
+  console.log('weatherData', weatherData);
+  console.log('ERORCEDC',errorWeather)
+
+  if (loadingGeolocation || loadingUserCity || loadingWeather) return <p>Fetching your coordinates</p>;
+  if (geolocationError || errorUserCity || errorWeather)
     return (
       <div>
         <p>{geolocationError}</p>

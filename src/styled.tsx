@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { DAY_COLOR, NIGHT_COLOR } from './common/constants';
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -7,7 +8,7 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
   #root {
-        background: linear-gradient(to bottom, rgba(22, 103, 148, 1), rgba(91, 176, 224, 1));
+        background: linear-gradient(45deg, ${DAY_COLOR},${NIGHT_COLOR});
         height: 100vh;
         width: 100vw;
   }
