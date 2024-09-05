@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import useFetchData from '../../common/hooks/useFetchData';
 import useGeolocation from '../../common/hooks/useGeolocation';
 import DayTemperature from './components/DayTempContainer';
-import MainContainer from './components/MainContainer';
+import LocationContainer from './components/LocationContainer';
 import {
   StyledLandingContainer,
   StyledLandingHeader,
@@ -82,8 +82,8 @@ const LandingDisplayPage = () => {
     <StyledLandingWrapper>
       <StyledLandingContainer>
         <StyledLandingHeader>
-          <MainContainer userLocation={userLocationData as LocationData[]} onClick={handleCityClick} />
-          <MainContainer userLocation={userLocationData as LocationData[]} onClick={handleCityClick} />
+          <LocationContainer userLocation={userLocationData as LocationData[]} onClick={handleCityClick} />
+          <LocationContainer userLocation={userLocationData as LocationData[]} onClick={handleCityClick} />
         </StyledLandingHeader>
         <Search userLocation={userLocationData as LocationData[]} />
         <StyledTemperatureContainer>

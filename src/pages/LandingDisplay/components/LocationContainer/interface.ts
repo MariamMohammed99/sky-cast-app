@@ -1,6 +1,6 @@
 import { LocationData } from '../../../../common/interfaces';
 
-export interface MainContainerProps {
+export interface LocationContainerProps {
   userLocation: LocationData[];
   onClick: () => void;
 }
