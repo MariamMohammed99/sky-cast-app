@@ -6,7 +6,7 @@ import locationAxiosInstance from '../../../../app/services/locationApi';
 import { SEARCH_CITY_URL } from '../../../../app/constants';
 import useFetchData from '../../../../common/hooks/useFetchData';
 import { SearchProps } from './interface';
-import { StyledInput } from './styled';
+import { StyledSearchIcon, StyledSearchInput, StyledSearch } from './styled';
 
 const Search: React.FC<SearchProps> = ({ userLocation }) => {
   //   const navigate = useNavigate();
@@ -31,12 +31,15 @@ const Search: React.FC<SearchProps> = ({ userLocation }) => {
   //     navigate('/');
   //   };
   return (
-    <StyledInput
-      type="text"
-      placeholder={`Search by city name in ${userLocation[0].country}`}
-      onChange={onChangeHandler}
-      value={query}
-    />
+    <StyledSearch>
+      <StyledSearchInput
+        type="text"
+        placeholder={`Search by city name in ${userLocation[0].country}`}
+        onChange={onChangeHandler}
+        value={query}
+      />
+      <StyledSearchIcon>🔍</StyledSearchIcon>
+    </StyledSearch>
   );
 };
 export default Search;

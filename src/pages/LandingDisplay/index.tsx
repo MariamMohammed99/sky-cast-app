@@ -18,6 +18,7 @@ import weatherAxiosInstance from '../../app/services/weatherApi';
 import { LocationData } from '../../common/interfaces';
 import { useNavigate } from 'react-router-dom';
 import Search from './components/Search';
+import DayTemperature from './components/DayTempContainer';
 
 const LandingDisplayPage = () => {
   const navigate = useNavigate();
@@ -87,8 +88,8 @@ const LandingDisplayPage = () => {
             <LocationContainer userLocation={userLocationData as LocationData[]} onClick={handleCityClick} />
             <Search userLocation={userLocationData as LocationData[]} />
           </StyledLocationSearchWrapper>
-          <LocationContainer userLocation={userLocationData as LocationData[]} onClick={handleCityClick} />
-        </StyledLandingHeader>
+          <DayTemperature day={`Day: Today`} temperature={Math.floor(Math.random() * 30) + 15}></DayTemperature>
+          </StyledLandingHeader>
         {/* <StyledTemperatureContainer>
           {Array.from({ length: 7 }).map((_, index) => (
             <DayTemperature key={index} day={`Day ${index + 1}`} temperature={Math.floor(Math.random() * 30) + 15} />

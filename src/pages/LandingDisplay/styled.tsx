@@ -47,6 +47,7 @@ export const StyledLandingHeader = styled.div`
 export const StyledLocationSearchWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap:20px
+  align-items: flex-start;
+  gap: 20px;
+  min-width: 40%;
 `;
