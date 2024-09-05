@@ -3,6 +3,9 @@
 // import useFetchData from '../../common/hooks/useFetchData';
 // import { constructCurrentWeatherParams } from '../../common/utils/utils';
 import useGeolocation from '../../common/hooks/useGeolocation';
+import DayTemperature from './components/DayTempContainer';
+import MainContainer from './components/MainContainer';
+import { StyledAppContainer, StyledTemperatureContainer } from './styled';
 // import locationAxiosInstance from '../../app/services/locationApi';
 // import { constructSearchParams } from '../../common/utils/constructParams';
 // import { getLocationData } from '../../app/services/locationApi';
@@ -33,7 +36,7 @@ const LandingDisplayPage = () => {
   console.log('coordinates', coordinates);
   // console.log('data', data);
 
-  if (loadingGeolocation) return <p>Loading...</p>;
+  if (loadingGeolocation) return <p>Fetching your coordinates</p>;
   if (geolocationError)
     return (
       <div>
@@ -58,13 +61,14 @@ const LandingDisplayPage = () => {
   if (!coordinates) return <p>Coordinates not available.</p>;
 
   return (
-    <>
-      <div>
-        {/* <p>Latitude: {coordinates.latitude}</p>
-      <p>Longitude: {coordinates.longitude}</p> */}
-        hu
-      </div>
-    </>
+    <StyledAppContainer>
+      <MainContainer/>
+      <StyledTemperatureContainer>
+        {Array.from({ length: 7 }).map((_, index) => (
+          <DayTemperature key={index} day={`Day ${index + 1}`} temperature={Math.floor(Math.random() * 30) + 15} />
+        ))}
+      </StyledTemperatureContainer>
+    </StyledAppContainer>
   );
 };
 
