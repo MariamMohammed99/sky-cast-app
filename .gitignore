@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 /coverage
-/node_modules
+.env
