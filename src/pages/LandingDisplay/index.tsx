@@ -62,7 +62,7 @@ const LandingDisplayPage = () => {
 
   return (
     <StyledAppContainer>
-      <MainContainer/>
+      <MainContainer />
       <StyledTemperatureContainer>
         {Array.from({ length: 7 }).map((_, index) => (
           <DayTemperature key={index} day={`Day ${index + 1}`} temperature={Math.floor(Math.random() * 30) + 15} />

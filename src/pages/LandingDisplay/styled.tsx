@@ -1,9 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledAppContainer = styled.div`
-  background: linear-gradient(to bottom, rgba(22, 103, 148, 1), rgba(91, 176, 224, 1));
-  min-height: 100vh;
-  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;

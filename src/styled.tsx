@@ -6,13 +6,9 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
   }
-
-  body, html, #root {
-    height: 100%;
-    width: 100%;
-  }
-
-  body {
-   font-family: Arial, sans-serif;
+  #root {
+        background: linear-gradient(to bottom, rgba(22, 103, 148, 1), rgba(91, 176, 224, 1));
+        height: 100vh;
+        width: 100vw;
   }
 `;
