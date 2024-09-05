@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import { AxiosRequestConfig } from 'axios';
+import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { UseAxiosResponse } from '../interfaces';
-import axiosInstance from '../../app/services/api';
 
-const useHttp = (
+const useFetchData = (
   url: string,
-  config?: AxiosRequestConfig,
+  config: AxiosRequestConfig,
+  axiosInstance: AxiosInstance
 ): UseAxiosResponse => {
   const [data, setData] = useState<unknown>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -32,4 +32,4 @@ const useHttp = (
   return { data, loading, error };
 };
 
-export default useHttp;
+export default useFetchData;
