@@ -1,28 +1,30 @@
 import { useLocation } from 'react-router-dom';
-import { ASTRONOMY_URL } from '../../app/constants';
+import { HISTORICAL_WEATHER_URL } from '../../app/constants';
 import weatherAxiosInstance from '../../app/services/weatherApi';
 import useFetchData from '../../common/hooks/useFetchData';
-import { constructAstronomyParams } from '../../common/utils/constructParams';
+import { constructHistoricalWeatherParams } from '../../common/utils/constructParams';
 import { useMemo } from 'react';
 
 const CityDashboardPage = () => {
-
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const latitude = queryParams.get('latitude');
   const longitude = queryParams.get('longitude');
 
-  const astronomyParams = useMemo(() => constructAstronomyParams(latitude, longitude), [latitude, longitude]);
+  const historyParams = useMemo(
+    () => constructHistoricalWeatherParams(latitude, longitude, 'today'),
+    [latitude, longitude],
+  );
   const {
-    data: astronomyData,
-    loading: loadingAstronomy,
-    error: errorAstronomy,
-  } = useFetchData(astronomyParams ? ASTRONOMY_URL : '', weatherAxiosInstance, {
-    params: astronomyParams,
+    data: historyData,
+    loading: loadingHistory,
+    error: errorHistory,
+  } = useFetchData(historyParams ? HISTORICAL_WEATHER_URL : '', weatherAxiosInstance, {
+    params: historyParams,
   });
-  console.log('data', astronomyData);
-  console.log('loading', loadingAstronomy);
-  console.log('error', errorAstronomy);
+  console.log('data', historyData);
+  console.log('loading', loadingHistory);
+  console.log('error', errorHistory);
 
   return <div>CityWeatherDashboardPage</div>;
 };

@@ -1,14 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
-import { API_KEY, WEATHER_BASE_URL, REQUEST_FORMAT, ASTRONOMY_URL, CURRENT_WEATHER_URL } from '../constants';
+import { API_KEY, WEATHER_BASE_URL, REQUEST_FORMAT, CURRENT_WEATHER_URL } from '../constants';
 
 const transformResponse = (response: AxiosResponse) => {
   if (response.config.url === CURRENT_WEATHER_URL) {
     const data = response.data.data;
     return { ...response, data };
-  } else if (response.config.url === ASTRONOMY_URL) {
-    const data = response.data.data;
-    return { ...response, data };
-  } else {
+  } 
+   else {
     const data = response.data.data;
     return { ...response, data };
   }
