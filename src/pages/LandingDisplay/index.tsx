@@ -7,12 +7,12 @@ import { StyledAppContainer, StyledTemperatureContainer } from './styled';
 import { constructCityUrl } from '../../common/utils/constructCityUrl';
 import locationAxiosInstance from '../../app/services/locationApi';
 import { constructCurrentWeatherParams } from '../../common/utils/constructParams';
-import { CURRENT_WEATHER_URL } from '../../app/constants';
+import { ASTRONOMY_URL, CURRENT_WEATHER_URL } from '../../app/constants';
 import weatherAxiosInstance from '../../app/services/weatherApi';
 
 const LandingDisplayPage = () => {
   const { coordinates, geolocationError, loadingGeolocation, permissionDenied } = useGeolocation();
-  
+
   const {
     data: userLocationData,
     loading: loadingUserCity,
@@ -20,14 +20,22 @@ const LandingDisplayPage = () => {
   } = useFetchData(constructCityUrl(coordinates?.latitude, coordinates?.longitude), locationAxiosInstance);
 
   const weatherParams = useMemo(
-    () => constructCurrentWeatherParams(coordinates?.latitude, coordinates?.longitude, 2),
+    () => constructCurrentWeatherParams(coordinates?.latitude, coordinates?.longitude),
     [coordinates],
   );
   const {
     data: weatherData,
     loading: loadingWeather,
     error: errorWeather,
-  } = useFetchData(weatherParams ? 's'+CURRENT_WEATHER_URL : '', weatherAxiosInstance, {
+  } = useFetchData(weatherParams ? CURRENT_WEATHER_URL : '', weatherAxiosInstance, {
+    params: weatherParams,
+  });
+
+  const {
+    data: astronomyData,
+    loading: loadingAstronomy,
+    error: errorAstronomy,
+  } = useFetchData(coordinates ? ASTRONOMY_URL : '', weatherAxiosInstance, {
     params: weatherParams,
   });
   // const params = useMemo(
@@ -44,10 +52,11 @@ const LandingDisplayPage = () => {
 
   console.log('data', userLocationData);
   console.log('weatherData', weatherData);
-  console.log('ERORCEDC',errorWeather)
+  console.log('astronomyData', astronomyData);
 
-  if (loadingGeolocation || loadingUserCity || loadingWeather) return <p>Fetching your coordinates</p>;
-  if (geolocationError || errorUserCity || errorWeather)
+  if (loadingGeolocation || loadingUserCity || loadingWeather || loadingAstronomy)
+    return <p>Fetching your coordinates</p>;
+  if (geolocationError || errorUserCity || errorWeather || errorAstronomy)
     return (
       <div>
         <p>{geolocationError}</p>

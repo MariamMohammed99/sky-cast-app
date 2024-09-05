@@ -1,5 +1,18 @@
-import axios from 'axios';
-import { API_KEY, WEATHER_BASE_URL,  REQUEST_FORMAT } from '../constants';
+import axios, { AxiosResponse } from 'axios';
+import { API_KEY, WEATHER_BASE_URL, REQUEST_FORMAT, ASTRONOMY_URL, CURRENT_WEATHER_URL } from '../constants';
+
+const transformResponse = (response: AxiosResponse) => {
+  if (response.config.url === CURRENT_WEATHER_URL) {
+    const data = response.data.data;
+    return { ...response, data };
+  } else if (response.config.url === ASTRONOMY_URL) {
+    const data = response.data.data;
+    return { ...response, data };
+  } else {
+    const data = response.data.data;
+    return { ...response, data };
+  }
+};
 
 const weatherAxiosInstance = axios.create({
   baseURL: WEATHER_BASE_URL,
@@ -10,8 +23,8 @@ const weatherAxiosInstance = axios.create({
 });
 
 weatherAxiosInstance.interceptors.response.use(
-  (response) => response,
-  (error) => {throw(error)},
+  (response) => transformResponse(response),
+  (error) => Promise.reject(error),
 );
 
 export default weatherAxiosInstance;
