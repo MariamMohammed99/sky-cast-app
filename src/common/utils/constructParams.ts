@@ -42,13 +42,7 @@ export const constructHistoricalWeatherParams = (
   };
 };
 
-export const constructSearchParams = (
-  latitude: number | undefined,
-  longitude: number | undefined,
-  countryCode: string,
-  searchPrefix: string,
-): SearchRequestParams | null => {
-  if (!latitude || !longitude) return null;
+export const constructSearchParams = (countryCode: string, searchPrefix: string): SearchRequestParams | null => {
   return {
     namePrefix: searchPrefix,
     limit: LIMIT_SEARCH_RESULTS,

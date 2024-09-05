@@ -16,6 +16,7 @@ import { CURRENT_WEATHER_URL } from '../../app/constants';
 import weatherAxiosInstance from '../../app/services/weatherApi';
 import { LocationData } from '../../common/interfaces';
 import { useNavigate } from 'react-router-dom';
+import Search from './components/Search';
 
 const LandingDisplayPage = () => {
   const navigate = useNavigate();
@@ -34,7 +35,9 @@ const LandingDisplayPage = () => {
     data: userLocationData,
     loading: loadingUserCity,
     error: errorUserCity,
-  } = useFetchData(constructCityUrl(coordinates?.latitude, coordinates?.longitude), locationAxiosInstance);
+  } = useFetchData(constructCityUrl(coordinates?.latitude, coordinates?.longitude), locationAxiosInstance, {
+    params: {},
+  });
 
   const weatherParams = useMemo(
     () => constructCurrentWeatherParams(coordinates?.latitude, coordinates?.longitude),
@@ -47,18 +50,6 @@ const LandingDisplayPage = () => {
   } = useFetchData(weatherParams ? CURRENT_WEATHER_URL : '', weatherAxiosInstance, {
     params: weatherParams,
   });
-
-  // const params = useMemo(
-  //   () => constructSearchParams(coordinates?.latitude, coordinates?.longitude),
-  //   [coordinates?.latitude, coordinates?.longitude],
-  // );
-  // const { data } = useFetchData(
-  //   params ? SEARCH_CITY_URL : '',
-  //   {
-  //     params,
-  //   },
-  //   locationAxiosInstance,
-  // );
 
   console.log('data', userLocationData);
   console.log('weatherData', weatherData);
@@ -85,7 +76,7 @@ const LandingDisplayPage = () => {
         )}
       </div>
     );
-  if (!coordinates) return <p>Coordinates not available.</p>;
+  if (!coordinates || !userLocationData) return <p>Coordinates not available.</p>;
 
   return (
     <StyledLandingWrapper>
@@ -94,6 +85,7 @@ const LandingDisplayPage = () => {
           <MainContainer userLocation={userLocationData as LocationData[]} onClick={handleCityClick} />
           <MainContainer userLocation={userLocationData as LocationData[]} onClick={handleCityClick} />
         </StyledLandingHeader>
+        <Search userLocation={userLocationData as LocationData[]} />
         <StyledTemperatureContainer>
           {Array.from({ length: 7 }).map((_, index) => (
             <DayTemperature key={index} day={`Day ${index + 1}`} temperature={Math.floor(Math.random() * 30) + 15} />

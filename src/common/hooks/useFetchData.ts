@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { UseAxiosResponse } from '../interfaces';
 
-const useFetchData = (url: string, axiosInstance: AxiosInstance, config?: AxiosRequestConfig): UseAxiosResponse => {
+const useFetchData = (url: string, axiosInstance: AxiosInstance, config: AxiosRequestConfig): UseAxiosResponse => {
   const [data, setData] = useState<unknown>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
@@ -19,7 +19,7 @@ const useFetchData = (url: string, axiosInstance: AxiosInstance, config?: AxiosR
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url]);
+  }, [url, JSON.stringify(config.params)]);
 
   useEffect(() => {
     fetchData();
