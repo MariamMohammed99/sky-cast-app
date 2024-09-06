@@ -39,7 +39,13 @@ export interface LocationRespone {
   metadata: Metadata;
 }
 
-export interface SearchParams {
+export interface SearchRequestParams {
+  namePrefix: string;
+  limit: number;
+  countryIds: string;
+}
+
+export interface CityRequestParams {
   namePrefix: string;
   limit: number;
   countryIds: string;

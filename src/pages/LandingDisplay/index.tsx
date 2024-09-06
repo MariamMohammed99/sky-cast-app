@@ -1,40 +1,62 @@
-// import { useMemo } from 'react';
-// import { SEARCH_CITY_URL } from '../../app/constants';
-// import useFetchData from '../../common/hooks/useFetchData';
-// import { constructCurrentWeatherParams } from '../../common/utils/utils';
+import { useMemo } from 'react';
+import useFetchData from '../../common/hooks/useFetchData';
 import useGeolocation from '../../common/hooks/useGeolocation';
-// import locationAxiosInstance from '../../app/services/locationApi';
-// import { constructSearchParams } from '../../common/utils/constructParams';
-// import { getLocationData } from '../../app/services/locationApi';
-// import { CURRENT_WEATHER_URL } from '../../app/constants';
+import LocationContainer from './components/LocationContainer';
+import {
+  StyledLandingContainer,
+  StyledLandingHeader,
+  StyledLandingWrapper,
+  StyledLocationSearchWrapper,
+  StyledTemperatureContainer,
+} from './styled';
+import { constructCityUrl } from '../../common/utils/constructCityUrl';
+import locationAxiosInstance from '../../app/services/locationApi';
+import { constructCurrentWeatherParams } from '../../common/utils/constructParams';
+import { CURRENT_WEATHER_URL } from '../../app/constants';
+import weatherAxiosInstance from '../../app/services/weatherApi';
+import { LocationData } from '../../common/interfaces';
+import { useNavigate } from 'react-router-dom';
+import Search from './components/Search';
+import DayTemperature from './components/DayTempContainer';
 
 const LandingDisplayPage = () => {
+  const navigate = useNavigate();
+
+  const handleCityClick = () => {
+    const queryParams = new URLSearchParams({
+      latitude: coordinates!.latitude.toString(),
+      longitude: coordinates!.longitude.toString(),
+    }).toString();
+
+    navigate(`/dashboard?${queryParams}`);
+  };
   const { coordinates, geolocationError, loadingGeolocation, permissionDenied } = useGeolocation();
 
-  // const params = useMemo(
-  //   () => constructCurrentWeatherParams(coordinates?.latitude, coordinates?.longitude, 2),
-  //   [coordinates?.latitude, coordinates?.longitude],
-  // );
-  // const { data: weatherResponse } = useFetchData(params ? CURRENT_WEATHER_URL : '', {
-  //   params,
-  // });
-  // console.log('weather response', weatherResponse);
-  // const params = useMemo(
-  //   () => constructSearchParams(coordinates?.latitude, coordinates?.longitude),
-  //   [coordinates?.latitude, coordinates?.longitude],
-  // );
-  // const { data } = useFetchData(
-  //   params ? SEARCH_CITY_URL : '',
-  //   {
-  //     params,
-  //   },
-  //   locationAxiosInstance,
-  // );
-  console.log('coordinates', coordinates);
-  // console.log('data', data);
+  const {
+    data: userLocationData,
+    loading: loadingUserCity,
+    error: errorUserCity,
+  } = useFetchData(constructCityUrl(coordinates?.latitude, coordinates?.longitude), locationAxiosInstance, {
+    params: {},
+  });
 
-  if (loadingGeolocation) return <p>Loading...</p>;
-  if (geolocationError)
+  const weatherParams = useMemo(
+    () => constructCurrentWeatherParams(coordinates?.latitude, coordinates?.longitude),
+    [coordinates],
+  );
+  const {
+    data: weatherData,
+    loading: loadingWeather,
+    error: errorWeather,
+  } = useFetchData(weatherParams ? CURRENT_WEATHER_URL : '', weatherAxiosInstance, {
+    params: weatherParams,
+  });
+
+  console.log('data', userLocationData);
+  console.log('weatherData', weatherData);
+
+  if (loadingGeolocation || loadingUserCity || loadingWeather) return <p>Fetching your coordinates</p>;
+  if (geolocationError || errorUserCity || errorWeather)
     return (
       <div>
         <p>{geolocationError}</p>
@@ -55,16 +77,25 @@ const LandingDisplayPage = () => {
         )}
       </div>
     );
-  if (!coordinates) return <p>Coordinates not available.</p>;
+  if (!coordinates || !userLocationData) return <p>Coordinates not available.</p>;
 
   return (
-    <>
-      <div>
-        {/* <p>Latitude: {coordinates.latitude}</p>
-      <p>Longitude: {coordinates.longitude}</p> */}
-        hu
-      </div>
-    </>
+    <StyledLandingWrapper>
+      <StyledLandingContainer>
+        <StyledLandingHeader>
+          <StyledLocationSearchWrapper>
+            <LocationContainer userLocation={userLocationData as LocationData[]} onClick={handleCityClick} />
+            <Search userLocation={userLocationData as LocationData[]} />
+          </StyledLocationSearchWrapper>
+          <DayTemperature day={`Today`} temperature={Math.floor(Math.random() * 30) + 15}></DayTemperature>
+          </StyledLandingHeader>
+        <StyledTemperatureContainer>
+          {Array.from({ length: 6 }).map((_, index) => (
+            <DayTemperature key={index} day={`Day ${index + 1}`} temperature={Math.floor(Math.random() * 30) + 15} />
+          ))}
+        </StyledTemperatureContainer>
+      </StyledLandingContainer>
+    </StyledLandingWrapper>
   );
 };
 
