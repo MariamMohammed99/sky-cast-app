@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import useFetchData from '../../common/hooks/useFetchData';
-import useGeolocation from '../../common/hooks/useGeolocation';
+import useFetchData from '../../hooks/useFetchData';
+import useGeolocation from '../../hooks/useGeolocation';
 import LocationContainer from './components/LocationContainer';
 import {
   StyledLandingContainer,

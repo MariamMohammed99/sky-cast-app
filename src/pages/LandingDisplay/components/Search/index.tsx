@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useDebounce from '../../../../common/hooks/useDebounce';
+import useDebounce from '../../../../hooks/useDebounce';
 import { constructSearchParams } from '../../../../common/utils/constructParams';
 import locationAxiosInstance from '../../../../app/services/locationApi';
 import { SEARCH_CITY_URL } from '../../../../app/constants';
-import useFetchData from '../../../../common/hooks/useFetchData';
+import useFetchData from '../../../../hooks/useFetchData';
 import { SearchProps } from './interface';
 import {
   StyledSearchIcon,

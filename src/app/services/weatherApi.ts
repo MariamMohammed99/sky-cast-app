@@ -1,15 +1,18 @@
-import axios, { AxiosResponse } from 'axios';
-import { API_KEY, WEATHER_BASE_URL, REQUEST_FORMAT, CURRENT_WEATHER_URL } from '../constants';
+import axios from 'axios';
+import { API_KEY, WEATHER_BASE_URL, REQUEST_FORMAT } from '../constants';
+import { Weather } from '../../common/interfaces';
+import { transformAvgWeather, transformCurrentCondition } from './utils/transformWeatherResponse';
 
-const transformResponse = (response: AxiosResponse) => {
-  if (response.config.url === CURRENT_WEATHER_URL) {
-    const data = response.data.data;
-    return { ...response, data };
-  } 
-   else {
-    const data = response.data.data;
-    return { ...response, data };
-  }
+const transformResponse = (rawData: string) => {
+  const parsedResponse = JSON.parse(rawData);
+  const { data } = parsedResponse;
+
+  const transformedData: Weather = {
+    currentCondition: data.current_condition ? transformCurrentCondition(data.current_condition[0]) : undefined,
+    weather: data.weather.map(transformAvgWeather),
+  };
+
+  return transformedData;
 };
 
 const weatherAxiosInstance = axios.create({
@@ -18,10 +21,11 @@ const weatherAxiosInstance = axios.create({
     key: API_KEY,
     format: REQUEST_FORMAT,
   },
+  transformResponse,
 });
 
 weatherAxiosInstance.interceptors.response.use(
-  (response) => transformResponse(response),
+  (response) => response,
   (error) => Promise.reject(error),
 );
 
