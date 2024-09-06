@@ -43,7 +43,6 @@ const LandingDisplayPage: React.FC<LandingDisplayPageProps> = ({ setBackgroundCo
   const isDayTime = useMemo(() => weatherData?.currentCondition?.isDayTime, [weatherData]);
 
   useEffect(() => {
-    console.log('isDayTime', isDayTime);
     if (weatherData) {
       if (isDayTime) {
         setBackgroundColor(BG_DAY_COLOR);
@@ -51,7 +50,7 @@ const LandingDisplayPage: React.FC<LandingDisplayPageProps> = ({ setBackgroundCo
         setBackgroundColor(BG_NIGHT_COLOR);
       }
     }
-  }, [weatherData,isDayTime, setBackgroundColor]);
+  }, [weatherData, isDayTime, setBackgroundColor]);
 
   if (geolocationError && permissionDenied) return <ErrorNotification locationPermissionDenied={permissionDenied} />;
 

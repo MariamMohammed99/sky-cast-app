@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SEARCH_CITY_URL } from '../../../../app/services/constants';
@@ -6,7 +5,8 @@ import locationAxiosInstance from '../../../../app/services/locationAxios';
 import {
   NO_SEARCH_RESULTS_TEXT,
   SEARCH_DELAY,
-  SEARCH_ICON,
+  SEARCH_ICON_ALT,
+  SEARCH_ICON_URL,
   SEARCH_LOADING_SIZE,
   SEARCH_PLACEHOLDER,
 } from '../../../../common/constants';
@@ -21,7 +21,7 @@ import {
   StyledResultsContainer,
   StyledSearchBar,
   StyledSearchContainer,
-  StyledSearchIcon,
+  StyledSearchImg,
   StyledSearchInput,
 } from './styled';
 import Loading from '../../../../common/components/Loading';
@@ -71,7 +71,8 @@ const Search: React.FC<SearchProps> = ({ userLocation }) => {
           onChange={onChangeHandler}
           value={query}
         />
-        <StyledSearchIcon>{SEARCH_ICON}</StyledSearchIcon>
+
+        <StyledSearchImg src={SEARCH_ICON_URL} alt={SEARCH_ICON_ALT} />
       </StyledSearchBar>
 
       {loading ? (

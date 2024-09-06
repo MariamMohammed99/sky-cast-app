@@ -12,13 +12,18 @@ export const StyledErrorContainer = styled.div`
   height: 80%;
   align-items: center;
   justify-content: center;
+  gap: 20px;
 `;
 
-export const StyledErrorIcon = styled.div`
-  font-size: 4rem;
-  margin-bottom: 1rem;
+export const StyledErrorImg = styled.img`
+  width: 200px;
   color: white;
   text-align: center;
+  mix-blend-mode: lighten;
+
+  @media (max-width: 571px) {
+    width: 150px;
+  }
 `;
 
 export const StyledErrorMessage = styled.div`

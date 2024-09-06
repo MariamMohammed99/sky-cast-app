@@ -36,9 +36,8 @@ export const StyledSearchInput = styled.input`
   outline: none;
 `;
 
-export const StyledSearchIcon = styled.span`
-  font-size: 16px;
-  pointer-events: none;
+export const StyledSearchImg = styled.img`
+  width: 30px;
 `;
 
 export const StyledResultsContainer = styled.div`
@@ -51,8 +50,7 @@ export const StyledResultsContainer = styled.div`
   font-size: 14px;
   width: 100%;
   border-radius: 20px;
-    overflow-x:hidden;
-
+  overflow-x: hidden;
 `;
 
 export const StyledResultItem = styled.div`
@@ -74,6 +72,5 @@ export const StyledEmptyResultItem = styled.div`
   align-items: center;
   padding: 0 15pxx;
   display: flex;
-    min-height: 35px;
-
+  min-height: 35px;
 `;
