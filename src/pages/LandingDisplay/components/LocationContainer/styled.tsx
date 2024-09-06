@@ -9,7 +9,7 @@ export const StyledLocationContainer = styled.div`
   flex:2;
 
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.12);
   }
 `;
 

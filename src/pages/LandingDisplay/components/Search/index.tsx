@@ -6,7 +6,7 @@ import locationAxiosInstance from '../../../../app/services/locationApi';
 import { SEARCH_CITY_URL } from '../../../../app/constants';
 import useFetchData from '../../../../common/hooks/useFetchData';
 import { SearchProps } from './interface';
-import { StyledSearchIcon, StyledSearchInput, StyledSearch } from './styled';
+import { StyledSearchIcon, StyledSearchInput, StyledSearchBar, StyledSearchContainer, StyledResultsContainer, StyledResultItem } from './styled';
 
 const Search: React.FC<SearchProps> = ({ userLocation }) => {
   //   const navigate = useNavigate();
@@ -31,7 +31,8 @@ const Search: React.FC<SearchProps> = ({ userLocation }) => {
   //     navigate('/');
   //   };
   return (
-    <StyledSearch>
+    <StyledSearchContainer>
+    <StyledSearchBar>
       <StyledSearchInput
         type="text"
         placeholder={`Search by city name in ${userLocation[0].country}`}
@@ -39,7 +40,16 @@ const Search: React.FC<SearchProps> = ({ userLocation }) => {
         value={query}
       />
       <StyledSearchIcon>🔍</StyledSearchIcon>
-    </StyledSearch>
+    </StyledSearchBar>
+    <StyledResultsContainer>
+        <StyledResultItem>No results found hjbhjb jhbjhbhj hbjhbj hbhb vghbhb hvbhv njh hbhbh bhbh hbhb bhbh bhbh </StyledResultItem>
+        <StyledResultItem>No results found</StyledResultItem>
+        <StyledResultItem>No results found</StyledResultItem>
+        <StyledResultItem>No results found</StyledResultItem>
+        <StyledResultItem>No results found</StyledResultItem>
+
+    </StyledResultsContainer>
+    </StyledSearchContainer>
   );
 };
 export default Search;

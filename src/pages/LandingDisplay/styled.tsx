@@ -5,20 +5,12 @@ export const StyledLandingContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
- width: 80%;
-
-  @media (max-width: 768px) {
-    padding-bottom: 10px;
-  }
-
-  @media (max-width: 480px) {
-    padding: 5px;
-  }
+  width: 80%;
+  padding-bottom: 20px;
 `;
 
 export const StyledTemperatureContainer = styled.div`
   display: flex;
-  width: 80%;
   gap: 15px;
   margin: 20px 0;
   justify-content: space-evenly;
@@ -34,7 +26,7 @@ export const StyledLandingWrapper = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 50px;
-  flex:1; 
+  flex: 1;
 `;
 
 export const StyledLandingHeader = styled.div`
@@ -42,6 +34,10 @@ export const StyledLandingHeader = styled.div`
   justify-content: space-between;
   width: 100%;
   gap: 20px;
+
+  @media (max-width: 555px) {
+    flex-direction: column;
+  }
 `;
 
 export const StyledLocationSearchWrapper = styled.div`
@@ -49,5 +45,5 @@ export const StyledLocationSearchWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 20px;
-  flex:2;
+  flex: 2;
 `;
