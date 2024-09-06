@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-export const StyledLocationContainer = styled.div`
+export const StyledUserLocationWrapper = styled.div`
   color: white;
   border-radius: 10px;
   text-align: start;

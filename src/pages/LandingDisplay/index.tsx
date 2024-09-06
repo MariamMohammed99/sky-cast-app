@@ -1,38 +1,20 @@
 import { useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { CURRENT_WEATHER_URL } from '../../app/services/constants';
 import locationAxiosInstance from '../../app/services/locationAxios';
 import weatherAxiosInstance from '../../app/services/weatherAxios';
-import { AvgWeather, LocationData } from '../../common/interfaces';
+import { AvgWeather } from '../../common/interfaces';
 import { constructCityUrl } from '../../common/utils/constructCityUrl';
 import { constructCurrentWeatherParams } from '../../common/utils/constructParams';
 import useFetchData from '../../hooks/useFetchData';
 import useGeolocation from '../../hooks/useGeolocation';
-import DayTemperature from './components/DayTempContainer';
-import LocationContainer from './components/LocationContainer';
-import Search from './components/Search';
-import {
-  StyledLandingContainer,
-  StyledLandingHeader,
-  StyledLandingWrapper,
-  StyledLocationSearchWrapper,
-  StyledTemperatureContainer,
-} from './styled';
+import DailyForecast from './components/DailyForecast';
+import { StyledLandingContainer, StyledLandingWrapper, StyledTemperatureContainer } from './styled';
 import { convertDate } from '../../common/utils/convertDate';
 import { LandingDisplayPageProps } from './interface';
 import { BG_DAY_COLOR, BG_NIGHT_COLOR } from '../../common/constants';
+import MainHeading from './components/MainHeading';
 
 const LandingDisplayPage: React.FC<LandingDisplayPageProps> = ({ setBackgroundColor }) => {
-  const navigate = useNavigate();
-
-  const handleCityClick = () => {
-    const queryParams = new URLSearchParams({
-      latitude: coordinates!.latitude.toString(),
-      longitude: coordinates!.longitude.toString(),
-    }).toString();
-
-    navigate(`/dashboard?${queryParams}`);
-  };
   const { coordinates, geolocationError, loadingGeolocation, permissionDenied } = useGeolocation();
 
   const {
@@ -92,30 +74,15 @@ const LandingDisplayPage: React.FC<LandingDisplayPageProps> = ({ setBackgroundCo
   return (
     <StyledLandingWrapper>
       <StyledLandingContainer>
-        <StyledLandingHeader>
-          <StyledLocationSearchWrapper>
-            <LocationContainer userLocation={userLocationData as LocationData[]} onClick={handleCityClick} />
-            <Search userLocation={userLocationData as LocationData[]} />
-          </StyledLocationSearchWrapper>
-          <DayTemperature
-            day={`Today ${convertDate(weatherData.weather[0].date)}`}
-            temperature={weatherData.currentCondition?.tempC}
-            image={
-              weatherData.currentCondition?.isDayTime
-                ? weatherData.weather[0].hourly[1].weatherIconUrl
-                : weatherData.weather[0].hourly[0].weatherIconUrl
-            }
-            description={
-              weatherData.currentCondition?.isDayTime
-                ? weatherData.weather[0].hourly[1].weatherDesc
-                : weatherData.weather[0].hourly[0].weatherDesc
-            }
-            isDayTime={weatherData.currentCondition?.isDayTime}
-          ></DayTemperature>
-        </StyledLandingHeader>
+        <MainHeading
+          userLocation={userLocationData}
+          weatherData={weatherData}
+          latitude={coordinates!.latitude}
+          longitude={coordinates!.longitude}
+        />
         <StyledTemperatureContainer>
           {weatherData.weather.slice(1).map((item: AvgWeather, index: number) => (
-            <DayTemperature
+            <DailyForecast
               key={index}
               day={convertDate(item.date)}
               temperature={item.avgTempC}

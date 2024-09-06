@@ -1,4 +1,4 @@
-export interface DayTemperatureProps {
+export interface DailyForecastProps {
   day: string;
   temperature: string;
   image:string
@@ -7,6 +7,6 @@ export interface DayTemperatureProps {
 }
 
 
-export interface StyledDayTempProps {
+export interface StyledDailyForecastProps {
   backgroundColor: string;
 }

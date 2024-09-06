@@ -32,7 +32,7 @@ const Search: React.FC<SearchProps> = ({ userLocation }) => {
     navigate(`/dashboard?${queryParams}`);
   };
   const params = useMemo(
-    () => constructSearchParams(userLocation[0].countryCode, debouncedValue),
+    () => constructSearchParams(userLocation.countryCode, debouncedValue),
     [debouncedValue, userLocation],
   );
   const { data: searchResults, haveBeenCalled } = useFetchData(
@@ -52,7 +52,7 @@ const Search: React.FC<SearchProps> = ({ userLocation }) => {
       <StyledSearchBar>
         <StyledSearchInput
           type="text"
-          placeholder={SEARCH_PLACEHOLDER.replace('{{country}}', userLocation[0].country)}
+          placeholder={SEARCH_PLACEHOLDER.replace('{{country}}', userLocation.country)}
           onChange={onChangeHandler}
           value={query}
         />
