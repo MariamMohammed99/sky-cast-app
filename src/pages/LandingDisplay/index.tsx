@@ -11,8 +11,10 @@ import DailyForecast from './components/DailyForecast';
 import { StyledLandingContainer, StyledLandingWrapper, StyledTemperatureContainer } from './styled';
 import { convertDate } from '../../common/utils/convertDate';
 import { LandingDisplayPageProps } from './interface';
-import { BG_DAY_COLOR, BG_NIGHT_COLOR } from '../../common/constants';
+import { BG_DAY_COLOR, BG_NIGHT_COLOR, LOADING_SIZE } from '../../common/constants';
 import MainHeading from './components/MainHeading';
+import Loading from '../../common/components/Loading';
+import ErrorNotification from '../../common/components/ErrorNotification';
 
 const LandingDisplayPage: React.FC<LandingDisplayPageProps> = ({ setBackgroundColor }) => {
   const { coordinates, geolocationError, loadingGeolocation, permissionDenied } = useGeolocation();
@@ -47,29 +49,19 @@ const LandingDisplayPage: React.FC<LandingDisplayPageProps> = ({ setBackgroundCo
     }
   }, [weatherData, setBackgroundColor]);
 
-  if (loadingGeolocation || loadingUserCity || loadingWeather) return <p>Fetching your coordinates</p>;
-  if (geolocationError || errorUserCity || errorWeather)
-    return (
-      <div>
-        <p>{geolocationError}</p>
-        {permissionDenied && (
-          <div>
-            <p>Geolocation access has been denied. To enable it:</p>
-            <ul>
-              <li>
-                For Chrome: Go to Settings &gt; Privacy and Security &gt; Site Settings &gt; Location and make sure the
-                site is allowed.
-              </li>
-              <li>
-                For Firefox: Go to Preferences &gt; Privacy & Security &gt; Permissions &gt; Location and check the site
-                settings.
-              </li>
-            </ul>
-          </div>
-        )}
-      </div>
-    );
-  if (!coordinates || !userLocationData || !weatherData) return <p>Coordinates not available.</p>;
+
+  if (geolocationError && permissionDenied) return <ErrorNotification locationPermissionDenied={permissionDenied} />;
+
+  if (geolocationError || errorUserCity || errorWeather) return <ErrorNotification />;
+  
+  if (loadingGeolocation || loadingUserCity || loadingWeather) return <Loading size={LOADING_SIZE} />;
+
+  console.log("coordinates", coordinates)
+  console.log("userLocationData", userLocationData)
+
+  console.log("weatherData", weatherData)
+
+  if (!coordinates || !userLocationData || !weatherData) return null;
 
   return (
     <StyledLandingWrapper>

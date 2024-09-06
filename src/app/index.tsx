@@ -4,20 +4,27 @@ import LandingDisplayPage from '../pages/LandingDisplay';
 import CityDashboardPage from '../pages/CityDashboard';
 import TitleBar from '../common/components/TitleBar';
 import { GlobalStyle } from './styled';
-import { BG_DAY_COLOR } from '../common/constants';
+import { BG_DAY_COLOR, WRONG_URL_ERROR_MESSAGE } from '../common/constants';
+import ErrorNotification from '../common/components/ErrorNotification';
+import ConnectionStatusWrapper from '../common/components/ConnectionWrapper';
 
 const App: React.FC = () => {
   const [backgroundColor, setBackgroundColor] = useState<string>(BG_DAY_COLOR);
   return (
     <>
-    <GlobalStyle backgroundColor={backgroundColor}/>
-    <Router>
-      <TitleBar />
-      <Routes>
-        <Route path="/" element={<LandingDisplayPage setBackgroundColor={setBackgroundColor}/>} />
-        <Route path="/dashboard" element={<CityDashboardPage />} />
-      </Routes>
-    </Router>
+      <GlobalStyle backgroundColor={backgroundColor} />
+      <Router>
+        <ConnectionStatusWrapper>
+          <>
+        <TitleBar />
+        <Routes>
+          <Route path="/" element={<LandingDisplayPage setBackgroundColor={setBackgroundColor} />} />
+          <Route path="/dashboard" element={<CityDashboardPage />} />
+          <Route path="*" element={<ErrorNotification customizedError={WRONG_URL_ERROR_MESSAGE} />} />
+        </Routes>
+        </>
+        </ConnectionStatusWrapper>
+      </Router>
     </>
   );
 };
