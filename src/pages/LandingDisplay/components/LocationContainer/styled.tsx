@@ -17,3 +17,7 @@ export const StyledCountryHeader = styled.h3`
   margin-top: 5px;
   font-size: 1rem;
 `;
+
+export const StyledCityHeader = styled.h1`
+  margin: 0;
+`;

@@ -28,5 +28,6 @@ export const StyledHeaderTitle = styled.h1`
 
 export const StyledButtonLinksWrapper = styled.div`
   display: flex;
+  gap:20px;
   }
 `;

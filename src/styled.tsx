@@ -10,7 +10,6 @@ export const GlobalStyle = createGlobalStyle`
   #root, html, body {
         background-color: ${BG_DAY_COLOR};
         height: 100vh;
-        width: 100vw;
         font-family: sans-serif;
         display:flex;
         flex-direction:column;

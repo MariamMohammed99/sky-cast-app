@@ -49,15 +49,14 @@ export const StyledSearchIcon = styled.span`
 export const StyledResultsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #f9f9f9;
   max-height: 80vh;
-  overflow-y: auto; // Scroll if results overflow
+  overflow-y: auto;
   background-color: white;
   color: #333;
   font-size: 14px;
   width: 100%;
-  padding: 15px;
   border-radius: 20px;
+  padding: 15px;
 `;
 
 export const StyledResultItem = styled.div`
@@ -66,9 +65,14 @@ export const StyledResultItem = styled.div`
   align-items: center;
   display: flex;
   cursor: pointer;
-   transform-origin: center;
 
   &:hover {
     transform: scale(1.01);
   }
+`;
+
+export const StyledEmptyResultItem = styled.div`
+  min-height: 25px;
+  align-items: center;
+  display: flex;
 `;

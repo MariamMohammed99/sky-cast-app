@@ -1,54 +1,77 @@
 import { useMemo, useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useDebounce from '../../../../common/hooks/useDebounce';
 import { constructSearchParams } from '../../../../common/utils/constructParams';
 import locationAxiosInstance from '../../../../app/services/locationApi';
 import { SEARCH_CITY_URL } from '../../../../app/constants';
 import useFetchData from '../../../../common/hooks/useFetchData';
 import { SearchProps } from './interface';
-import { StyledSearchIcon, StyledSearchInput, StyledSearchBar, StyledSearchContainer, StyledResultsContainer, StyledResultItem } from './styled';
+import {
+  StyledSearchIcon,
+  StyledSearchInput,
+  StyledSearchBar,
+  StyledSearchContainer,
+  StyledResultsContainer,
+  StyledResultItem,
+  StyledEmptyResultItem,
+} from './styled';
+import { NO_SEARCH_RESULTS_TEXT } from '../../../../common/constants';
+import { LocationData } from '../../../../common/interfaces';
 
 const Search: React.FC<SearchProps> = ({ userLocation }) => {
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const debouncedValue = useDebounce(query, 1000);
 
+  const handleClick = (latitude: number, longitude: number) => {
+    const queryParams = new URLSearchParams({
+      latitude: latitude.toString(),
+      longitude: longitude.toString(),
+    }).toString();
+
+    navigate(`/dashboard?${queryParams}`);
+  };
   const params = useMemo(
     () => constructSearchParams(userLocation[0].countryCode, debouncedValue),
     [debouncedValue, userLocation],
   );
-  const { data } = useFetchData(debouncedValue ? SEARCH_CITY_URL : '', locationAxiosInstance, {
-    params,
-  });
-
-  console.log('data', data);
+  const { data: searchResults, haveBeenCalled } = useFetchData(
+    debouncedValue ? SEARCH_CITY_URL : '',
+    locationAxiosInstance,
+    {
+      params,
+    },
+  );
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
   };
 
-  //   const navigateToMain = () => {
-  //     navigate('/');
-  //   };
   return (
     <StyledSearchContainer>
-    <StyledSearchBar>
-      <StyledSearchInput
-        type="text"
-        placeholder={`Search by city name in ${userLocation[0].country}`}
-        onChange={onChangeHandler}
-        value={query}
-      />
-      <StyledSearchIcon>🔍</StyledSearchIcon>
-    </StyledSearchBar>
-    <StyledResultsContainer>
-        <StyledResultItem>No results found hjbhjb jhbjhbhj hbjhbj hbhb vghbhb hvbhv njh hbhbh bhbh hbhb bhbh bhbh </StyledResultItem>
-        <StyledResultItem>No results found</StyledResultItem>
-        <StyledResultItem>No results found</StyledResultItem>
-        <StyledResultItem>No results found</StyledResultItem>
-        <StyledResultItem>No results found</StyledResultItem>
-
-    </StyledResultsContainer>
+      <StyledSearchBar>
+        <StyledSearchInput
+          type="text"
+          placeholder={`Search by city name in ${userLocation[0].country}`}
+          onChange={onChangeHandler}
+          value={query}
+        />
+        <StyledSearchIcon>🔍</StyledSearchIcon>
+      </StyledSearchBar>
+      {haveBeenCalled && query ? (
+        <StyledResultsContainer>
+          {searchResults && searchResults.length > 0 ? (
+            searchResults.map((item: LocationData, index: number) => (
+              <StyledResultItem
+                key={index}
+                onClick={() => handleClick(item.latitude, item.longitude)}
+              >{`${item.city}, ${item.region}`}</StyledResultItem>
+            ))
+          ) : (
+            <StyledEmptyResultItem>{NO_SEARCH_RESULTS_TEXT}</StyledEmptyResultItem>
+          )}
+        </StyledResultsContainer>
+      ) : null}
     </StyledSearchContainer>
   );
 };

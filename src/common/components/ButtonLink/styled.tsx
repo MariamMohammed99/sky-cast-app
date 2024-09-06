@@ -7,7 +7,6 @@ export const StyledButtonLink = styled(Link)`
   font-size: 1rem;
   font-weight: normal;
   cursor: pointer;
-  margin: 0 20px 0 0;
   text-align: center;
 
   &:hover {
