@@ -1,15 +1,15 @@
 import { styled } from 'styled-components';
-import { DAY_COLOR } from '../../../../common/constants';
+import { StyledDayTempProps } from './interface';
 
-export const StyledDayTemperatureWrapper = styled.div`
-  background-color: ${DAY_COLOR};
+export const StyledDayTemperatureWrapper = styled.div<Omit<StyledDayTempProps, 'backgroundColor'>>`
+  background-color: ${(props) => props.theme.backgroundColor};
   border-radius: 8px;
   text-align: center;
   color: white;
   display: flex;
   align-items: center;
   flex: 1;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   height: max-content;
 `;

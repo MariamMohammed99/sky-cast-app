@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LIMIT_GET_CITY_NAME, LOCATION_BASE_URL } from '../constants';
+import { LIMIT_GET_CITY_NAME, LOCATION_BASE_URL } from './constants';
 import { LocationData, LocationRespone } from '../../common/interfaces';
 
 const transformResponse = (rawData: string) => {

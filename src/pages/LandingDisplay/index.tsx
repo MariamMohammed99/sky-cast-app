@@ -1,8 +1,8 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CURRENT_WEATHER_URL } from '../../app/constants';
-import locationAxiosInstance from '../../app/services/locationApi';
-import weatherAxiosInstance from '../../app/services/weatherApi';
+import { CURRENT_WEATHER_URL } from '../../app/services/constants';
+import locationAxiosInstance from '../../app/services/locationAxios';
+import weatherAxiosInstance from '../../app/services/weatherAxios';
 import { AvgWeather, LocationData } from '../../common/interfaces';
 import { constructCityUrl } from '../../common/utils/constructCityUrl';
 import { constructCurrentWeatherParams } from '../../common/utils/constructParams';
@@ -19,8 +19,10 @@ import {
   StyledTemperatureContainer,
 } from './styled';
 import { convertDate } from '../../common/utils/convertDate';
+import { LandingDisplayPageProps } from './interface';
+import { BG_DAY_COLOR, BG_NIGHT_COLOR } from '../../common/constants';
 
-const LandingDisplayPage = () => {
+const LandingDisplayPage: React.FC<LandingDisplayPageProps> = ({ setBackgroundColor }) => {
   const navigate = useNavigate();
 
   const handleCityClick = () => {
@@ -53,7 +55,15 @@ const LandingDisplayPage = () => {
     params: weatherParams,
   });
 
-  console.log('weatherData', weatherData);
+  useEffect(() => {
+    if (weatherData && weatherData.currentCondition) {
+      if (weatherData.currentCondition?.isDayTime) {
+        setBackgroundColor(BG_DAY_COLOR);
+      } else {
+        setBackgroundColor(BG_NIGHT_COLOR);
+      }
+    }
+  }, [weatherData, setBackgroundColor]);
 
   if (loadingGeolocation || loadingUserCity || loadingWeather) return <p>Fetching your coordinates</p>;
   if (geolocationError || errorUserCity || errorWeather)
@@ -78,7 +88,7 @@ const LandingDisplayPage = () => {
       </div>
     );
   if (!coordinates || !userLocationData || !weatherData) return <p>Coordinates not available.</p>;
-  //weatherData.currentCondition?.isDayTime? item.hourly[1]:item.hourly[0]
+
   return (
     <StyledLandingWrapper>
       <StyledLandingContainer>
@@ -100,6 +110,7 @@ const LandingDisplayPage = () => {
                 ? weatherData.weather[0].hourly[1].weatherDesc
                 : weatherData.weather[0].hourly[0].weatherDesc
             }
+            isDayTime={weatherData.currentCondition?.isDayTime}
           ></DayTemperature>
         </StyledLandingHeader>
         <StyledTemperatureContainer>
@@ -114,6 +125,7 @@ const LandingDisplayPage = () => {
               description={
                 weatherData.currentCondition?.isDayTime ? item.hourly[1].weatherDesc : item.hourly[0].weatherDesc
               }
+              isDayTime={weatherData.currentCondition?.isDayTime}
             />
           ))}
         </StyledTemperatureContainer>

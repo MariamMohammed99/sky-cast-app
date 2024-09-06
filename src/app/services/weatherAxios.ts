@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_KEY, WEATHER_BASE_URL, REQUEST_FORMAT } from '../constants';
+import { API_KEY, WEATHER_BASE_URL, REQUEST_FORMAT } from './constants';
 import { Weather } from '../../common/interfaces';
 import { transformAvgWeather, transformCurrentCondition } from './utils/transformWeatherResponse';
 

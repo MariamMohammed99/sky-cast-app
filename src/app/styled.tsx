@@ -1,14 +1,14 @@
 import { createGlobalStyle } from 'styled-components';
-import { BG_DAY_COLOR } from './common/constants';
+import { GlobalStyleProps } from './interface';
 
-export const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
   #root, html, body {
-        background-color: ${BG_DAY_COLOR};
+   background-color: ${(props) => props.backgroundColor};
         height: 100vh;
         font-family: sans-serif;
         display:flex;

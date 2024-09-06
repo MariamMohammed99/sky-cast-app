@@ -2,8 +2,8 @@ import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useDebounce from '../../../../hooks/useDebounce';
 import { constructSearchParams } from '../../../../common/utils/constructParams';
-import locationAxiosInstance from '../../../../app/services/locationApi';
-import { SEARCH_CITY_URL } from '../../../../app/constants';
+import locationAxiosInstance from '../../../../app/services/locationAxios';
+import { SEARCH_CITY_URL } from '../../../../app/services/constants';
 import useFetchData from '../../../../hooks/useFetchData';
 import { SearchProps } from './interface';
 import {
@@ -15,13 +15,13 @@ import {
   StyledResultItem,
   StyledEmptyResultItem,
 } from './styled';
-import { NO_SEARCH_RESULTS_TEXT } from '../../../../common/constants';
+import { NO_SEARCH_RESULTS_TEXT, SEARCH_DELAY, SEARCH_PLACEHOLDER } from '../../../../common/constants';
 import { LocationData } from '../../../../common/interfaces';
 
 const Search: React.FC<SearchProps> = ({ userLocation }) => {
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
-  const debouncedValue = useDebounce(query, 1000);
+  const debouncedValue = useDebounce(query, SEARCH_DELAY);
 
   const handleClick = (latitude: number, longitude: number) => {
     const queryParams = new URLSearchParams({
@@ -52,7 +52,7 @@ const Search: React.FC<SearchProps> = ({ userLocation }) => {
       <StyledSearchBar>
         <StyledSearchInput
           type="text"
-          placeholder={`Search by city name in ${userLocation[0].country}`}
+          placeholder={SEARCH_PLACEHOLDER.replace('{{country}}', userLocation[0].country)}
           onChange={onChangeHandler}
           value={query}
         />

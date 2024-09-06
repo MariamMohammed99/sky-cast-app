@@ -4,7 +4,7 @@ import {
   LIMIT_SEARCH_RESULTS,
   AVG_TIME_INTERVAL,
   WEATHER_DAYS_NO,
-} from '../../app/constants';
+} from '../../app/services/constants';
 import { SearchRequestParams } from '../interfaces';
 
 export const constructCurrentWeatherParams = (

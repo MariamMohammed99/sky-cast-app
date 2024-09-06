@@ -3,4 +3,10 @@ export interface DayTemperatureProps {
   temperature: string;
   image:string
   description:string
+  isDayTime:boolean;
+}
+
+
+export interface StyledDayTempProps {
+  backgroundColor: string;
 }
