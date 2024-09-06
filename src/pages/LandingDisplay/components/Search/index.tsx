@@ -1,27 +1,56 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useDebounce from '../../../../hooks/useDebounce';
-import { constructSearchParams } from '../../../../common/utils/constructParams';
-import locationAxiosInstance from '../../../../app/services/locationAxios';
 import { SEARCH_CITY_URL } from '../../../../app/services/constants';
+import locationAxiosInstance from '../../../../app/services/locationAxios';
+import {
+  NO_SEARCH_RESULTS_TEXT,
+  SEARCH_DELAY,
+  SEARCH_ICON,
+  SEARCH_LOADING_SIZE,
+  SEARCH_PLACEHOLDER,
+} from '../../../../common/constants';
+import { LocationData } from '../../../../common/interfaces';
+import { constructSearchParams } from '../../../../common/utils/constructParams';
+import useDebounce from '../../../../hooks/useDebounce';
 import useFetchData from '../../../../hooks/useFetchData';
 import { SearchProps } from './interface';
 import {
-  StyledSearchIcon,
-  StyledSearchInput,
+  StyledEmptyResultItem,
+  StyledResultItem,
+  StyledResultsContainer,
   StyledSearchBar,
   StyledSearchContainer,
-  StyledResultsContainer,
-  StyledResultItem,
-  StyledEmptyResultItem,
+  StyledSearchIcon,
+  StyledSearchInput,
 } from './styled';
-import { NO_SEARCH_RESULTS_TEXT, SEARCH_DELAY, SEARCH_PLACEHOLDER } from '../../../../common/constants';
-import { LocationData } from '../../../../common/interfaces';
+import Loading from '../../../../common/components/Loading';
 
 const Search: React.FC<SearchProps> = ({ userLocation }) => {
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const debouncedValue = useDebounce(query, SEARCH_DELAY);
+  const [searchResults, setSearchResults] = useState<LocationData[] | undefined>(undefined);
+
+  const params = useMemo(
+    () => constructSearchParams(userLocation.countryCode, debouncedValue),
+    [debouncedValue, userLocation.countryCode],
+  );
+
+  const { data, loading } = useFetchData(
+    debouncedValue && query ? SEARCH_CITY_URL : '',
+    locationAxiosInstance,
+    { params },
+    true,
+  );
+
+  useEffect(() => {
+    setSearchResults(data);
+  }, [data]);
+
+  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(event.target.value);
+    if (!event.target.value) setSearchResults(undefined);
+  };
 
   const handleClick = (latitude: number, longitude: number) => {
     const queryParams = new URLSearchParams({
@@ -30,21 +59,6 @@ const Search: React.FC<SearchProps> = ({ userLocation }) => {
     }).toString();
 
     navigate(`/dashboard?${queryParams}`);
-  };
-  const params = useMemo(
-    () => constructSearchParams(userLocation.countryCode, debouncedValue),
-    [debouncedValue, userLocation],
-  );
-  const { data: searchResults, haveBeenCalled } = useFetchData(
-    debouncedValue ? SEARCH_CITY_URL : '',
-    locationAxiosInstance,
-    {
-      params,
-    },
-  );
-
-  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value);
   };
 
   return (
@@ -56,23 +70,35 @@ const Search: React.FC<SearchProps> = ({ userLocation }) => {
           onChange={onChangeHandler}
           value={query}
         />
-        <StyledSearchIcon>🔍</StyledSearchIcon>
+        <StyledSearchIcon>{SEARCH_ICON}</StyledSearchIcon>
       </StyledSearchBar>
-      {haveBeenCalled && query ? (
+
+      {loading ? (
         <StyledResultsContainer>
-          {searchResults && searchResults.length > 0 ? (
-            searchResults.map((item: LocationData, index: number) => (
-              <StyledResultItem
-                key={index}
-                onClick={() => handleClick(item.latitude, item.longitude)}
-              >{`${item.city}, ${item.region}`}</StyledResultItem>
-            ))
-          ) : (
-            <StyledEmptyResultItem>{NO_SEARCH_RESULTS_TEXT}</StyledEmptyResultItem>
-          )}
+          <Loading size={SEARCH_LOADING_SIZE} />
         </StyledResultsContainer>
-      ) : null}
+      ) : (
+        debouncedValue &&
+        query &&
+        searchResults && (
+          <StyledResultsContainer>
+            {searchResults.length > 0 ? (
+              searchResults.map((item: LocationData) => (
+                <StyledResultItem
+                  key={`${item.latitude}-${item.longitude}`}
+                  onClick={() => handleClick(item.latitude, item.longitude)}
+                >
+                  {`${item.city}, ${item.region}`}
+                </StyledResultItem>
+              ))
+            ) : (
+              <StyledEmptyResultItem>{NO_SEARCH_RESULTS_TEXT}</StyledEmptyResultItem>
+            )}
+          </StyledResultsContainer>
+        )
+      )}
     </StyledSearchContainer>
   );
 };
+
 export default Search;

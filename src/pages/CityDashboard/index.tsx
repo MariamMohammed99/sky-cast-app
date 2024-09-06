@@ -4,6 +4,8 @@ import weatherAxiosInstance from '../../app/services/weatherAxios';
 import useFetchData from '../../hooks/useFetchData';
 import { constructHistoricalWeatherParams } from '../../common/utils/constructParams';
 import { useMemo } from 'react';
+import Loading from '../../common/components/Loading';
+import { LOADING_SIZE } from '../../common/constants';
 
 const CityDashboardPage = () => {
   const location = useLocation();
@@ -23,8 +25,9 @@ const CityDashboardPage = () => {
     params: historyParams,
   });
   console.log('data', historyData);
-  console.log('loading', loadingHistory);
   console.log('error', errorHistory);
+
+  if (loadingHistory) return <Loading size={LOADING_SIZE} />;
 
   return <div>CityWeatherDashboardPage</div>;
 };

@@ -11,8 +11,9 @@ import DailyForecast from './components/DailyForecast';
 import { StyledLandingContainer, StyledLandingWrapper, StyledTemperatureContainer } from './styled';
 import { convertDate } from '../../common/utils/convertDate';
 import { LandingDisplayPageProps } from './interface';
-import { BG_DAY_COLOR, BG_NIGHT_COLOR } from '../../common/constants';
+import { BG_DAY_COLOR, BG_NIGHT_COLOR, LOADING_SIZE } from '../../common/constants';
 import MainHeading from './components/MainHeading';
+import Loading from '../../common/components/Loading';
 
 const LandingDisplayPage: React.FC<LandingDisplayPageProps> = ({ setBackgroundColor }) => {
   const { coordinates, geolocationError, loadingGeolocation, permissionDenied } = useGeolocation();
@@ -47,7 +48,8 @@ const LandingDisplayPage: React.FC<LandingDisplayPageProps> = ({ setBackgroundCo
     }
   }, [weatherData, setBackgroundColor]);
 
-  if (loadingGeolocation || loadingUserCity || loadingWeather) return <p>Fetching your coordinates</p>;
+  if (loadingGeolocation || loadingUserCity || loadingWeather) return <Loading size={LOADING_SIZE} />;
+
   if (geolocationError || errorUserCity || errorWeather)
     return (
       <div>
@@ -69,6 +71,7 @@ const LandingDisplayPage: React.FC<LandingDisplayPageProps> = ({ setBackgroundCo
         )}
       </div>
     );
+
   if (!coordinates || !userLocationData || !weatherData) return <p>Coordinates not available.</p>;
 
   return (

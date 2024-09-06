@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
 
-const useFetchData = (url: string, axiosInstance: AxiosInstance, config: AxiosRequestConfig) => {
+const useFetchData = (url: string, axiosInstance: AxiosInstance, config: AxiosRequestConfig, isSearchRequest = false) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(isSearchRequest ? false : true);
   const [error, setError] = useState<Error | null>(null);
   const [haveBeenCalled, setHaveBeenCalled] = useState<boolean>(false);
 
@@ -15,6 +15,7 @@ const useFetchData = (url: string, axiosInstance: AxiosInstance, config: AxiosRe
     try {
       const response = await axiosInstance.get(url, config);
       setData(response.data);
+      setLoading(false);
     } catch (err) {
       console.log('Error while fetching:', err);
       setError(err as Error);
