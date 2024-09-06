@@ -1,12 +1,16 @@
 import { styled } from 'styled-components';
+import { DAY_COLOR } from '../../../../common/constants';
 
 export const StyledDayTemperatureWrapper = styled.div`
-  background: white;
+  background-color: ${DAY_COLOR};
   border-radius: 8px;
-  padding: 15px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 100px;
+  color: white;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 export const StyledDayTitle = styled.h3`
@@ -15,7 +19,19 @@ export const StyledDayTitle = styled.h3`
 `;
 
 export const StyledTemperature = styled.p`
-  margin: 5px 0 0;
   font-size: 1.2rem;
   font-weight: bold;
+`;
+
+export const StyledImageWrapper = styled.div`
+  width: 100%;
+  margin: 0 auto;
+`;
+
+export const StyledDayTempContent = styled.div`
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 10px;
 `;

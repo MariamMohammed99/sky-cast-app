@@ -6,6 +6,7 @@ export const StyledLocationContainer = styled.div`
   text-align: start;
   cursor: pointer;
   transition: transform 0.3s;
+  flex:2;
 
   &:hover {
     transform: scale(1.05);
