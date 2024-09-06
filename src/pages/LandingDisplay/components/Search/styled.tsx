@@ -24,7 +24,6 @@ export const StyledSearchBar = styled.div`
   background-color: white;
   border: none;
   outline: none;
-  
 `;
 
 export const StyledSearchInput = styled.input`
@@ -52,15 +51,18 @@ export const StyledResultsContainer = styled.div`
   font-size: 14px;
   width: 100%;
   border-radius: 20px;
-  padding: 15px;
+    overflow-x:hidden;
+
 `;
 
 export const StyledResultItem = styled.div`
   transition: transform 0.1s;
+  padding: 0 15px;
   min-height: 35px;
   align-items: center;
   display: flex;
   cursor: pointer;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.3);
 
   &:hover {
     transform: scale(1.01);
@@ -70,5 +72,8 @@ export const StyledResultItem = styled.div`
 export const StyledEmptyResultItem = styled.div`
   min-height: 25px;
   align-items: center;
+  padding: 0 15pxx;
   display: flex;
+    min-height: 35px;
+
 `;

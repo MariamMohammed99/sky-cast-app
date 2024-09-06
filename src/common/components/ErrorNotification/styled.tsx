@@ -12,7 +12,6 @@ export const StyledErrorContainer = styled.div`
   height: 80%;
   align-items: center;
   justify-content: center;
-  padding-top: 20px;
 `;
 
 export const StyledErrorIcon = styled.div`
