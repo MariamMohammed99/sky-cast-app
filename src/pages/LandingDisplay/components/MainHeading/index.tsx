@@ -1,13 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { convertDate } from '../../../../common/utils/convertDate';
 import Search from '../Search';
-import TodaysForecast from '../TodaysForecast';
+import CurrentForecast from '../CurrentForecast';
 import UserLocation from '../UserLocation';
 import { MainHeadingProps } from './interface';
 import { StyledLandingHeader, StyledLocationSearchWrapper } from './styled';
+import { useMemo } from 'react';
 
 const MainHeading: React.FC<MainHeadingProps> = ({ userLocation, weatherData, latitude, longitude }) => {
   const navigate = useNavigate();
+  const { weather, currentCondition } = weatherData;
 
   const handleCityClick = () => {
     const queryParams = new URLSearchParams({
@@ -18,27 +20,28 @@ const MainHeading: React.FC<MainHeadingProps> = ({ userLocation, weatherData, la
     navigate(`/dashboard?${queryParams}`);
   };
 
+  const { weatherIconUrl, weatherDesc } = useMemo(
+    () =>
+      currentCondition!.isDayTime
+        ? { weatherIconUrl: weather[0].hourly[1].weatherIconUrl, weatherDesc: weather[0].hourly[1].weatherDesc }
+        : { weatherIconUrl: weather[0].hourly[0].weatherIconUrl, weatherDesc: weather[0].hourly[0].weatherDesc },
+    [currentCondition, weather],
+  );
+
   return (
     <StyledLandingHeader>
       <StyledLocationSearchWrapper>
         <UserLocation userLocation={userLocation[0]} onClick={handleCityClick} />
         <Search userLocation={userLocation[0]} />
       </StyledLocationSearchWrapper>
-      <TodaysForecast
-        day={`Today ${convertDate(weatherData.weather[0].date)}`}
-        temperature={weatherData.currentCondition!.tempC}
-        image={
-          weatherData.currentCondition?.isDayTime
-            ? weatherData.weather[0].hourly[1].weatherIconUrl
-            : weatherData.weather[0].hourly[0].weatherIconUrl
-        }
-        description={
-          weatherData.currentCondition?.isDayTime
-            ? weatherData.weather[0].hourly[1].weatherDesc
-            : weatherData.weather[0].hourly[0].weatherDesc
-        }
+      <CurrentForecast
+        day={convertDate(weatherData.weather[0].date)}
+        minTemp={weather[0].minTempC}
+        maxTemp={weather[0].maxTempC}
+        image={weatherIconUrl}
+        description={weatherDesc}
         isDayTime={weatherData.currentCondition!.isDayTime}
-      ></TodaysForecast>
+      ></CurrentForecast>
     </StyledLandingHeader>
   );
 };

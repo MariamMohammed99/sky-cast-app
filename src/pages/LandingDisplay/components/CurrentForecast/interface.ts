@@ -1,6 +1,7 @@
-export interface TodaysForecastProps {
+export interface CurrentForecastProps {
     day: string;
-    temperature: string;
+    minTemp: string;
+    maxTemp:string;
     image:string
     description:string
     isDayTime:boolean;

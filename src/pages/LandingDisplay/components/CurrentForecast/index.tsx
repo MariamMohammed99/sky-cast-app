@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { DAY_COLOR, NIGHT_COLOR } from '../../../../common/constants';
-import { TodaysForecastProps } from './interface';
+import { DAY_COLOR, NIGHT_COLOR, TODAY_TEXT, TONIGHT_TEXT } from '../../../../common/constants';
+import { CurrentForecastProps } from './interface';
 import {
   StyledDailyForecastContent,
   StyledDailyForecastWrapper,
@@ -9,20 +9,23 @@ import {
   StyledTemperature,
 } from './styled';
 
-const TodaysForecast: React.FC<TodaysForecastProps> = ({ day, temperature, image, description, isDayTime }) => {
+const CurrentForecast: React.FC<CurrentForecastProps> = ({ day, minTemp, maxTemp, image, description, isDayTime }) => {
   const backgroundColor = useMemo(() => (isDayTime ? DAY_COLOR : NIGHT_COLOR), [isDayTime]);
+  const dayTitle = useMemo(() => (isDayTime ? TODAY_TEXT : TONIGHT_TEXT), [isDayTime]);
+
   return (
     <StyledDailyForecastWrapper style={{ backgroundColor }}>
       <StyledDailyForecastContent>
-        <StyledDayTitle>{day}</StyledDayTitle>
+        <StyledDayTitle>{`${dayTitle} ${day}`}</StyledDayTitle>
         <StyledImageWrapper>
           <img src={image} alt={description} />
         </StyledImageWrapper>
-        <StyledTemperature>{temperature}°C</StyledTemperature>
         <StyledTemperature>{description}</StyledTemperature>
+        <StyledTemperature>{minTemp}°C</StyledTemperature>
+        <StyledTemperature>{maxTemp}°C</StyledTemperature>
       </StyledDailyForecastContent>
     </StyledDailyForecastWrapper>
   );
 };
 
-export default TodaysForecast;
+export default CurrentForecast;

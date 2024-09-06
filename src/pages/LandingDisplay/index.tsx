@@ -39,27 +39,23 @@ const LandingDisplayPage: React.FC<LandingDisplayPageProps> = ({ setBackgroundCo
     params: weatherParams,
   });
 
+  const isDayTime = useMemo(() => weatherData?.currentCondition?.isDayTime || undefined, [weatherData]);
+
   useEffect(() => {
-    if (weatherData && weatherData.currentCondition) {
-      if (weatherData.currentCondition?.isDayTime) {
+    if (isDayTime !== undefined) {
+      if (isDayTime) {
         setBackgroundColor(BG_DAY_COLOR);
       } else {
         setBackgroundColor(BG_NIGHT_COLOR);
       }
     }
-  }, [weatherData, setBackgroundColor]);
-
+  }, [isDayTime, setBackgroundColor]);
 
   if (geolocationError && permissionDenied) return <ErrorNotification locationPermissionDenied={permissionDenied} />;
 
   if (geolocationError || errorUserCity || errorWeather) return <ErrorNotification />;
-  
+
   if (loadingGeolocation || loadingUserCity || loadingWeather) return <Loading size={LOADING_SIZE} />;
-
-  console.log("coordinates", coordinates)
-  console.log("userLocationData", userLocationData)
-
-  console.log("weatherData", weatherData)
 
   if (!coordinates || !userLocationData || !weatherData) return null;
 
@@ -78,13 +74,9 @@ const LandingDisplayPage: React.FC<LandingDisplayPageProps> = ({ setBackgroundCo
               key={index}
               day={convertDate(item.date)}
               temperature={item.avgTempC}
-              image={
-                weatherData.currentCondition?.isDayTime ? item.hourly[1].weatherIconUrl : item.hourly[0].weatherIconUrl
-              }
-              description={
-                weatherData.currentCondition?.isDayTime ? item.hourly[1].weatherDesc : item.hourly[0].weatherDesc
-              }
-              isDayTime={weatherData.currentCondition?.isDayTime}
+              image={isDayTime ? item.hourly[1].weatherIconUrl : item.hourly[0].weatherIconUrl}
+              description={isDayTime ? item.hourly[1].weatherDesc : item.hourly[0].weatherDesc}
+              isDayTime={isDayTime}
             />
           ))}
         </StyledTemperatureContainer>
