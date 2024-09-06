@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { CURRENT_WEATHER_URL } from '../../app/constants';
 import locationAxiosInstance from '../../app/services/locationApi';
 import weatherAxiosInstance from '../../app/services/weatherApi';
-import { LocationData } from '../../common/interfaces';
+import { AvgWeather, LocationData } from '../../common/interfaces';
 import { constructCityUrl } from '../../common/utils/constructCityUrl';
 import { constructCurrentWeatherParams } from '../../common/utils/constructParams';
 import useFetchData from '../../hooks/useFetchData';
@@ -18,6 +18,7 @@ import {
   StyledLocationSearchWrapper,
   StyledTemperatureContainer,
 } from './styled';
+import { convertDate } from '../../common/utils/convertDate';
 
 const LandingDisplayPage = () => {
   const navigate = useNavigate();
@@ -76,8 +77,8 @@ const LandingDisplayPage = () => {
         )}
       </div>
     );
-  if (!coordinates || !userLocationData) return <p>Coordinates not available.</p>;
-
+  if (!coordinates || !userLocationData || !weatherData) return <p>Coordinates not available.</p>;
+  //weatherData.currentCondition?.isDayTime? item.hourly[1]:item.hourly[0]
   return (
     <StyledLandingWrapper>
       <StyledLandingContainer>
@@ -86,11 +87,34 @@ const LandingDisplayPage = () => {
             <LocationContainer userLocation={userLocationData as LocationData[]} onClick={handleCityClick} />
             <Search userLocation={userLocationData as LocationData[]} />
           </StyledLocationSearchWrapper>
-          <DayTemperature day={`Today`} temperature={Math.floor(Math.random() * 30) + 15}></DayTemperature>
+          <DayTemperature
+            day={`Today ${convertDate(weatherData.weather[0].date)}`}
+            temperature={weatherData.currentCondition?.tempC}
+            image={
+              weatherData.currentCondition?.isDayTime
+                ? weatherData.weather[0].hourly[1].weatherIconUrl
+                : weatherData.weather[0].hourly[0].weatherIconUrl
+            }
+            description={
+              weatherData.currentCondition?.isDayTime
+                ? weatherData.weather[0].hourly[1].weatherDesc
+                : weatherData.weather[0].hourly[0].weatherDesc
+            }
+          ></DayTemperature>
         </StyledLandingHeader>
         <StyledTemperatureContainer>
-          {Array.from({ length: 6 }).map((_, index) => (
-            <DayTemperature key={index} day={`Day ${index + 1}`} temperature={Math.floor(Math.random() * 30) + 15} />
+          {weatherData.weather.slice(1).map((item: AvgWeather, index: number) => (
+            <DayTemperature
+              key={index}
+              day={convertDate(item.date)}
+              temperature={item.avgTempC}
+              image={
+                weatherData.currentCondition?.isDayTime ? item.hourly[1].weatherIconUrl : item.hourly[0].weatherIconUrl
+              }
+              description={
+                weatherData.currentCondition?.isDayTime ? item.hourly[1].weatherDesc : item.hourly[0].weatherDesc
+              }
+            />
           ))}
         </StyledTemperatureContainer>
       </StyledLandingContainer>

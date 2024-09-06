@@ -7,18 +7,19 @@ import {
   StyledTemperature,
 } from './styled';
 
-const DayTemperature: React.FC<DayTemperatureProps> = ({ day, temperature }) => {
+const DayTemperature: React.FC<DayTemperatureProps> = ({ day, temperature, image, description }) => {
   return (
     <StyledDayTemperatureWrapper>
       <StyledDayTempContent>
         <StyledDayTitle>{day}</StyledDayTitle>
         <StyledImageWrapper>
           <img
-            src={'https://cdn.worldweatheronline.com/images/wsymbols01_png_64/wsymbol_0002_sunny_intervals.png'}
-            alt="Your description"
+            src={image}
+            alt={description}
           />
         </StyledImageWrapper>
         <StyledTemperature>{temperature}°C</StyledTemperature>
+        <StyledTemperature>{description}</StyledTemperature>
       </StyledDayTempContent>
     </StyledDayTemperatureWrapper>
   );

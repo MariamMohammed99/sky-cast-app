@@ -52,11 +52,9 @@ export interface CurrentCondition {
   localObsDateTime?: string;
   isDayTime: boolean;
   tempC: string;
-  tempF: string;
   weatherDesc: string;
   weatherIconUrl: string;
   feelsLikeC: string;
-  feelsLikeF: string;
   humidity: string;
   uvIndex: string;
   visibility: string;
@@ -75,11 +73,8 @@ export interface AvgWeather {
   date: string;
   astronomy: Astronomy;
   maxTempC: string;
-  maxTempF: string;
   minTempC: string;
-  minTempF: string;
   avgTempC: string;
-  avgTempF: string;
   uvIndexx: string;
   hourly: CurrentCondition[];
 }

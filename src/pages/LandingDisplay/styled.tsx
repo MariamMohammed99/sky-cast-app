@@ -39,6 +39,7 @@ export const StyledLandingHeader = styled.div`
 
   @media (max-width: 571px) {
     flex-direction: column;
+    align-items: stretch;
   }
 `;
 
