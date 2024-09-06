@@ -24,7 +24,6 @@ export const StyledSearchBar = styled.div`
   background-color: white;
   border: none;
   outline: none;
-
 `;
 
 export const StyledSearchInput = styled.input`

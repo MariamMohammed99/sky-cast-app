@@ -1,7 +1,16 @@
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { CURRENT_WEATHER_URL } from '../../app/constants';
+import locationAxiosInstance from '../../app/services/locationApi';
+import weatherAxiosInstance from '../../app/services/weatherApi';
+import { LocationData } from '../../common/interfaces';
+import { constructCityUrl } from '../../common/utils/constructCityUrl';
+import { constructCurrentWeatherParams } from '../../common/utils/constructParams';
 import useFetchData from '../../hooks/useFetchData';
 import useGeolocation from '../../hooks/useGeolocation';
+import DayTemperature from './components/DayTempContainer';
 import LocationContainer from './components/LocationContainer';
+import Search from './components/Search';
 import {
   StyledLandingContainer,
   StyledLandingHeader,
@@ -9,15 +18,6 @@ import {
   StyledLocationSearchWrapper,
   StyledTemperatureContainer,
 } from './styled';
-import { constructCityUrl } from '../../common/utils/constructCityUrl';
-import locationAxiosInstance from '../../app/services/locationApi';
-import { constructCurrentWeatherParams } from '../../common/utils/constructParams';
-import { CURRENT_WEATHER_URL } from '../../app/constants';
-import weatherAxiosInstance from '../../app/services/weatherApi';
-import { LocationData } from '../../common/interfaces';
-import { useNavigate } from 'react-router-dom';
-import Search from './components/Search';
-import DayTemperature from './components/DayTempContainer';
 
 const LandingDisplayPage = () => {
   const navigate = useNavigate();
@@ -52,7 +52,6 @@ const LandingDisplayPage = () => {
     params: weatherParams,
   });
 
-  console.log('data', userLocationData);
   console.log('weatherData', weatherData);
 
   if (loadingGeolocation || loadingUserCity || loadingWeather) return <p>Fetching your coordinates</p>;
@@ -88,7 +87,7 @@ const LandingDisplayPage = () => {
             <Search userLocation={userLocationData as LocationData[]} />
           </StyledLocationSearchWrapper>
           <DayTemperature day={`Today`} temperature={Math.floor(Math.random() * 30) + 15}></DayTemperature>
-          </StyledLandingHeader>
+        </StyledLandingHeader>
         <StyledTemperatureContainer>
           {Array.from({ length: 6 }).map((_, index) => (
             <DayTemperature key={index} day={`Day ${index + 1}`} temperature={Math.floor(Math.random() * 30) + 15} />

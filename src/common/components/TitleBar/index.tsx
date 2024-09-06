@@ -5,13 +5,13 @@ import { StyledButtonLinksWrapper, StyledHeaderTitle, StyledTitleBar, StyledTitl
 const TitleBar = () => {
   return (
     <StyledTitleBarWrapper>
-    <StyledTitleBar>
-      <StyledHeaderTitle>{APP_TITLE}</StyledHeaderTitle>
-      <StyledButtonLinksWrapper>
-        <ButtonLink title="Contact Us" to="/"></ButtonLink>
-        <ButtonLink title="About" to="/"></ButtonLink>
-      </StyledButtonLinksWrapper>
-    </StyledTitleBar>
+      <StyledTitleBar>
+        <StyledHeaderTitle>{APP_TITLE}</StyledHeaderTitle>
+        <StyledButtonLinksWrapper>
+          <ButtonLink title="Contact Us" to="/"></ButtonLink>
+          <ButtonLink title="About" to="/"></ButtonLink>
+        </StyledButtonLinksWrapper>
+      </StyledTitleBar>
     </StyledTitleBarWrapper>
   );
 };

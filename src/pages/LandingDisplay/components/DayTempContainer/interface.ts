@@ -1,4 +1,4 @@
 export interface DayTemperatureProps {
-    day: string;
-    temperature: number;
-  }
+  day: string;
+  temperature: number;
+}
