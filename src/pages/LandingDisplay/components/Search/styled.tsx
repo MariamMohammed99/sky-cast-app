@@ -5,12 +5,11 @@ export const StyledSearchContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 90%;
-  padding-top: 10px;
   border: none;
   outline: none;
   gap: 10px;
 
-  @media (max-width: 555px) {
+  @media (max-width: 571px) {
     width: 100%;
   }
 `;
@@ -26,9 +25,6 @@ export const StyledSearchBar = styled.div`
   border: none;
   outline: none;
 
-  @media (max-width: 768px) {
-    height: 40px;
-  }
 `;
 
 export const StyledSearchInput = styled.input`
