@@ -1,15 +1,15 @@
 import { styled } from 'styled-components';
-import { DAY_COLOR } from '../../../../common/constants';
+import { StyledTodaysForecastProps } from './interface';
 
-export const StyledDayTemperatureWrapper = styled.div`
-  background-color: ${DAY_COLOR};
+export const StyledDailyForecastWrapper = styled.div<Omit<StyledTodaysForecastProps, 'backgroundColor'>>`
+  background-color: ${(props) => props.theme.backgroundColor};
   border-radius: 8px;
   text-align: center;
   color: white;
   display: flex;
   align-items: center;
   flex: 1;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   height: max-content;
 `;
@@ -29,7 +29,7 @@ export const StyledImageWrapper = styled.div`
   margin: 0 auto;
 `;
 
-export const StyledDayTempContent = styled.div`
+export const StyledDailyForecastContent = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;

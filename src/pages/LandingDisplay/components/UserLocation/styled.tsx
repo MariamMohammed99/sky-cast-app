@@ -1,12 +1,12 @@
 import { styled } from 'styled-components';
 
-export const StyledLocationContainer = styled.div`
+export const StyledUserLocationWrapper = styled.div`
   color: white;
   border-radius: 10px;
   text-align: start;
   cursor: pointer;
   transition: transform 0.3s;
-  flex:2;
+  flex: 2;
 
   &:hover {
     transform: scale(1.12);

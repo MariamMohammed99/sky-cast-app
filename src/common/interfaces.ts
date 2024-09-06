@@ -1,3 +1,5 @@
+//#region geolocation interfaces
+
 export interface Coordinates {
   latitude: number;
   longitude: number;
@@ -10,19 +12,14 @@ export interface GeolocationState {
   permissionDenied: boolean;
 }
 
-export interface UseAxiosResponse {
-  data: unknown;
-  loading: boolean;
-  error: Error | null;
-}
+//#endregion
 
-interface Link {
-  rel: string;
-  href: string;
-}
-interface Metadata {
-  currentOffset: number;
-  totalCount: number;
+//#region location interfaces
+
+export interface SearchRequestParams {
+  namePrefix: string;
+  limit: number;
+  countryIds: string;
 }
 export interface LocationData {
   city: string;
@@ -32,21 +29,69 @@ export interface LocationData {
   latitude: number;
   longitude: number;
 }
+interface Link {
+  rel: string;
+  href: string;
+}
+interface Metadata {
+  currentOffset: number;
+  totalCount: number;
+}
 
 export interface LocationRespone {
-  links: Link[];
+  links?: Link[];
   data: LocationData[];
-  metadata: Metadata;
+  metadata?: Metadata;
 }
 
-export interface SearchRequestParams {
-  namePrefix: string;
-  limit: number;
-  countryIds: string;
+//#endregion
+
+//#region weather interfaces
+
+export interface CurrentCondition {
+  localObsDateTime?: string;
+  isDayTime: boolean;
+  tempC: string;
+  weatherDesc: string;
+  weatherIconUrl: string;
+  feelsLikeC: string;
+  humidity: string;
+  uvIndex: string;
+  visibility: string;
+  visibilityMiles: string;
+  chanceOfRain?: string;
 }
 
-export interface CityRequestParams {
-  namePrefix: string;
-  limit: number;
-  countryIds: string;
+export interface Astronomy {
+  sunrise: string;
+  sunset: string;
+  moonrise: string;
+  moonset: string;
+  moonIllumination: string;
+}
+export interface AvgWeather {
+  date: string;
+  astronomy: Astronomy;
+  maxTempC: string;
+  minTempC: string;
+  avgTempC: string;
+  uvIndexx: string;
+  hourly: CurrentCondition[];
+}
+
+export interface Weather {
+  currentCondition?: CurrentCondition;
+  weather: AvgWeather[];
+}
+
+export interface WeatherResponse {
+  data: Weather;
+}
+
+//#endregion
+
+export interface UseAxiosResponse {
+  data: unknown;
+  loading: boolean;
+  error: Error | null;
 }

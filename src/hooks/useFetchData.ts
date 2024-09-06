@@ -16,6 +16,7 @@ const useFetchData = (url: string, axiosInstance: AxiosInstance, config: AxiosRe
       const response = await axiosInstance.get(url, config);
       setData(response.data);
     } catch (err) {
+      console.log('Error while fetching:', err);
       setError(err as Error);
     } finally {
       setLoading(false);
