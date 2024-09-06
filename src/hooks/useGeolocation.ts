@@ -9,6 +9,7 @@ const useGeolocation = (): GeolocationState => {
 
   const handleSuccess = useCallback((position: GeolocationPosition) => {
     const { latitude, longitude } = position.coords;
+
     setCoordinates({ latitude, longitude });
     setLoading(false);
   }, []);

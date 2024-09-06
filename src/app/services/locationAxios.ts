@@ -1,10 +1,9 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { LIMIT_GET_CITY_NAME, LOCATION_BASE_URL } from './constants';
-import { LocationData, LocationRespone } from '../../common/interfaces';
+import { LocationData } from '../../common/interfaces';
 
-const transformResponse = (rawData: string) => {
-  const parsedResponse: LocationRespone = JSON.parse(rawData);
-  const { data } = parsedResponse;
+const transformResponse = (response: AxiosResponse) => {
+  const { data } = response.data;
 
   const transformedData = data.map((item: LocationData) => ({
     city: item.city,
@@ -15,7 +14,7 @@ const transformResponse = (rawData: string) => {
     latitude: item.latitude,
   }));
 
-  return transformedData;
+  return { ...response, data: transformedData };
 };
 
 const locationAxiosInstance = axios.create({
@@ -23,11 +22,10 @@ const locationAxiosInstance = axios.create({
   params: {
     limit: LIMIT_GET_CITY_NAME,
   },
-  transformResponse,
 });
 
 locationAxiosInstance.interceptors.response.use(
-  (response) => response,
+  (response) => transformResponse(response),
   (error) => Promise.reject(error),
 );
 

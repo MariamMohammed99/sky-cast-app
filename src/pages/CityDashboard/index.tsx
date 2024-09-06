@@ -5,7 +5,8 @@ import useFetchData from '../../hooks/useFetchData';
 import { constructHistoricalWeatherParams } from '../../common/utils/constructParams';
 import { useMemo } from 'react';
 import Loading from '../../common/components/Loading';
-import { LOADING_SIZE } from '../../common/constants';
+import { LOADING_SIZE, WRONG_URL_ERROR_MESSAGE } from '../../common/constants';
+import ErrorNotification from '../../common/components/ErrorNotification';
 
 const CityDashboardPage = () => {
   const location = useLocation();
@@ -17,6 +18,7 @@ const CityDashboardPage = () => {
     () => constructHistoricalWeatherParams(latitude, longitude, 'today'),
     [latitude, longitude],
   );
+
   const {
     data: historyData,
     loading: loadingHistory,
@@ -25,7 +27,10 @@ const CityDashboardPage = () => {
     params: historyParams,
   });
   console.log('data', historyData);
-  console.log('error', errorHistory);
+
+  if (!historyParams) return <ErrorNotification customizedError={WRONG_URL_ERROR_MESSAGE}/>;
+  if (errorHistory) return <ErrorNotification />;
+
 
   if (loadingHistory) return <Loading size={LOADING_SIZE} />;
 
