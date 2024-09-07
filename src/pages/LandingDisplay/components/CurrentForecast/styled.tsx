@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
-import { StyledTodaysForecastProps } from './interface';
+import { StyledBackgroundProps } from '../../../interface';
 
-export const StyledDailyForecastWrapper = styled.div<Omit<StyledTodaysForecastProps, 'backgroundColor'>>`
+export const StyledDailyForecastWrapper = styled.div<Omit<StyledBackgroundProps, 'backgroundColor'>>`
   background-color: ${(props) => props.theme.backgroundColor};
   border-radius: 8px;
   text-align: center;

@@ -6,7 +6,3 @@ export interface CurrentForecastProps {
   weekName: string;
   isDayTime: boolean;
 }
-
-export interface StyledTodaysForecastProps {
-  backgroundColor: string;
-}

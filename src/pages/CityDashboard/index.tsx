@@ -6,7 +6,7 @@ import weatherAxiosInstance from '../../app/services/weatherAxios';
 import ErrorNotification from '../../common/components/ErrorNotification';
 import Loading from '../../common/components/Loading';
 import MainLocation from '../../common/components/MainLocation';
-import { LOADING_SIZE, WRONG_URL_ERROR_MESSAGE } from '../../common/constants';
+import { DAY_COLOR, LOADING_SIZE, NIGHT_COLOR, WRONG_URL_ERROR_MESSAGE } from '../../common/constants';
 import { constructHistoricalWeatherParams } from '../../common/utils/constructParams';
 import useFetchData from '../../hooks/useFetchData';
 import useWeatherAndLocationFetch from '../../hooks/useWeatherLocationFetch';
@@ -14,7 +14,13 @@ import { PageProps } from '../interface';
 import BarChart from './components/BarChart';
 import LineChart from './components/LineChart';
 import Table from './components/Table';
-import { StyledDashboardContainer, StyledDashboardWrapper, StyledLocationWrapper } from './styled';
+import {
+  StyledChartHeader,
+  StyledChartWrapper,
+  StyledDashboardContainer,
+  StyledDashboardWrapper,
+  StyledLocationWrapper,
+} from './styled';
 
 const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
   const location = useLocation();
@@ -43,6 +49,8 @@ const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
   } = useFetchData(historyParams ? HISTORICAL_WEATHER_URL : '', weatherAxiosInstance, {
     params: historyParams,
   });
+
+  const backgroundColor = useMemo(() => (isDayTime ? DAY_COLOR : NIGHT_COLOR), [isDayTime]);
 
   console.log('city', locationData);
   console.log('current', weatherData);
@@ -82,17 +90,19 @@ const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
 
   return (
     <StyledDashboardWrapper>
-    <StyledDashboardContainer>
-      <StyledLocationWrapper>
-        <MainLocation location={locationData[0]} isDayTime={isDayTime} clickable={"false"} onClick={() => {}} />
-      </StyledLocationWrapper>
-      <h1>My D3 Bar Chart</h1>
-      <BarChart data={data} />
-      <h1>My D3 Line Chart</h1>
-      <LineChart data={temp} />
-      <h1>My D3 Table</h1>
-      <Table data={table} />
-    </StyledDashboardContainer>
+      <StyledDashboardContainer>
+        <StyledLocationWrapper>
+          <MainLocation location={locationData[0]} isDayTime={isDayTime} clickable={'false'} onClick={() => {}} />
+        </StyledLocationWrapper>
+        <h1>My D3 Bar Chart</h1>
+        <BarChart data={data} />
+        <StyledChartWrapper style={{ backgroundColor }}>
+          <StyledChartHeader>My D3 Line Chart</StyledChartHeader>
+          <LineChart data={temp} />
+        </StyledChartWrapper>
+        <h1>My D3 Table</h1>
+        <Table data={table} />
+      </StyledDashboardContainer>
     </StyledDashboardWrapper>
   );
 };

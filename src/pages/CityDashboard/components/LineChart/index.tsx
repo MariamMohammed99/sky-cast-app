@@ -60,7 +60,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
         .attr('class', 'line')
         .attr('d', line)
         .attr('fill', 'none')
-        .attr('stroke', 'steelblue')
+        .attr('stroke', 'white')
         .attr('stroke-width', 2);
 
       // Add x-axis

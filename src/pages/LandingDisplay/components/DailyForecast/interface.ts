@@ -5,7 +5,3 @@ export interface DailyForecastProps {
   description: string;
   isDayTime: boolean;
 }
-
-export interface StyledDailyForecastProps {
-  backgroundColor: string;
-}
