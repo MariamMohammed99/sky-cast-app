@@ -40,7 +40,7 @@ const BarChart: React.FC<BarChartProps> = ({ data }) => {
         .attr('y', (d) => yScale(d.value))
         .attr('width', xScale.bandwidth())
         .attr('height', (d) => innerHeight - yScale(d.value))
-        .attr('fill', 'steelblue');
+        .attr('fill', 'white');
 
       g.append('g')
         .attr('class', 'x-axis')
