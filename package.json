@@ -12,7 +12,7 @@
     "lint:fix": "eslint src/ --fix",
     "format": "prettier --write src/ --config ./.prettierrc.cjs",
     "test": "jest --env=jsdom",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage --env=jsdom"
   },
   "dependencies": {
     "@types/styled-components": "^5.1.34",
