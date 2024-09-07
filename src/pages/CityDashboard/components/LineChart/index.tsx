@@ -44,15 +44,15 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
 
       const yScale = d3
         .scaleLinear()
-        .domain([0, d3.max(data, (d) => d.temp) || 0])
+        .domain([0, d3.max(data, (d) => Number(d.temp)) || 0])
         .nice()
         .range([innerHeight, 0]);
 
       // Define line generator
       const line = d3
-        .line<{ day: string; temp: number }>()
+        .line<{ day: string; temp: string }>()
         .x((d) => xScale(d.day) ?? 0)
-        .y((d) => yScale(d.temp) ?? 0);
+        .y((d) => yScale(Number(d.temp)) ?? 0);
 
       // Add the line path
       g.append('path')

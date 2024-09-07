@@ -25,7 +25,6 @@ const LandingDisplayPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
       setBackgroundColor,
     });
 
-    console.log("hgbh", weatherData)
   if (geolocationError && permissionDenied) return <ErrorNotification locationPermissionDenied={permissionDenied} />;
 
   if (geolocationError || errorCity || errorWeather) return <ErrorNotification />;

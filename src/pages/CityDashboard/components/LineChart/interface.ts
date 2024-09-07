@@ -1,3 +1,3 @@
 export interface LineChartProps {
-  data: { day: string; temp: number }[];
+  data: { day: string; temp: string }[];
 }

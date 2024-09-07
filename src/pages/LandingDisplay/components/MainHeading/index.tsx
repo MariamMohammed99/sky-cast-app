@@ -43,7 +43,7 @@ const MainHeading: React.FC<MainHeadingProps> = ({ userLocation, weatherData, la
         feelsLike={TEMPERATURE.replace('{{temp}}', currentCondition!.feelsLikeC)}
         image={weatherIconUrl}
         description={weatherDesc}
-        isDayTime={weatherData.currentCondition!.isDayTime}
+        isDayTime={currentCondition!.isDayTime}
         summaryData={constructSummaryDetails(currentCondition!)}
       ></CurrentForecast>
     </StyledLandingHeader>
