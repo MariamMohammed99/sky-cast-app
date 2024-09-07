@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import { HISTORICAL_WEATHER_URL } from '../../app/services/constants';
+import { HISTORICAL_WEATHER_URL } from '../../app/constants';
 import locationAxiosInstance from '../../app/services/locationAxios';
 import weatherAxiosInstance from '../../app/services/weatherAxios';
 import ErrorNotification from '../../common/components/ErrorNotification';

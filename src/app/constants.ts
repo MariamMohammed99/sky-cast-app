@@ -1,4 +1,4 @@
-import envConfig from '../../../env.json';
+import envConfig from '../../env.json';
 //#region weather api
 
 export const WEATHER_BASE_URL = 'https://api.worldweatheronline.com/premium/v1/';

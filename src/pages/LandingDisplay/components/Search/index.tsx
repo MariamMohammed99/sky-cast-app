@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SEARCH_CITY_URL } from '../../../../app/services/constants';
+import { SEARCH_CITY_URL } from '../../../../app/constants';
 import locationAxiosInstance from '../../../../app/services/locationAxios';
 import {
   NO_SEARCH_RESULTS_TEXT,

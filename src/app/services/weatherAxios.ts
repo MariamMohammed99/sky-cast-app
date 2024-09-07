@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { API_KEY, WEATHER_BASE_URL, REQUEST_FORMAT } from './constants';
+import { API_KEY, WEATHER_BASE_URL, REQUEST_FORMAT } from '../constants';
 import { transformAvgWeather, transformCurrentCondition } from './utils/transformWeatherResponse';
 
 const transformResponse = (response: AxiosResponse) => {

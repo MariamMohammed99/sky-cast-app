@@ -1,4 +1,4 @@
-import { GET_CITY_NAME_URL } from '../../app/services/constants';
+import { GET_CITY_NAME_URL } from '../../app/constants';
 
 export const constructCityUrl = (
   latitude: number | undefined | string | null,

@@ -3,7 +3,7 @@ import {
   EXTRA_PARAMS_WEATHER,
   HOURLY_TIME_INTERVAL,
   WEATHER_DAYS_NO,
-} from '../../app/services/constants';
+} from '../../app/constants';
 import {
   constructCurrentWeatherParams,
   constructHistoricalWeatherParams,

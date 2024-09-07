@@ -1,5 +1,5 @@
 import { constructCityUrl } from './constructCityUrl';
-import { GET_CITY_NAME_URL } from '../../app/services/constants';
+import { GET_CITY_NAME_URL } from '../../app/constants';
 
 describe('constructCityUrl', () => {
   const mockUrl = GET_CITY_NAME_URL

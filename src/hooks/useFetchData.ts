@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { WEATHER_BASE_URL } from '../app/services/constants';
+import { WEATHER_BASE_URL } from '../app/constants';
 
 const useFetchData = (
   url: string,

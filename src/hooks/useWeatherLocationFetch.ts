@@ -2,7 +2,7 @@ import { useMemo, useEffect } from 'react';
 import useFetchData from './useFetchData';
 import { constructCityUrl } from '../common/utils/constructCityUrl';
 import { constructCurrentWeatherParams } from '../common/utils/constructParams';
-import { CURRENT_WEATHER_URL } from '../app/services/constants';
+import { CURRENT_WEATHER_URL } from '../app/constants';
 import { BG_DAY_COLOR, BG_NIGHT_COLOR } from '../common/constants';
 import { UseWeatherAndLocationProps } from '../common/interfaces';
 
