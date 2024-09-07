@@ -6,7 +6,7 @@ export const StyledLandingContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   flex: 1;
-  padding-bottom: 20px;
+  padding-top:40px;
 `;
 
 export const StyledTemperatureContainer = styled.div`
@@ -15,17 +15,12 @@ export const StyledTemperatureContainer = styled.div`
   margin: 20px 0;
   justify-content: space-evenly;
   width: 80%;
-
-  @media (max-width: 768px) {
-    flex-wrap: wrap;
-    gap: 10px;
-  }
+  flex-wrap: wrap;
 `;
 
 export const StyledLandingWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  padding-top: 50px;
   flex: 1;
 `;

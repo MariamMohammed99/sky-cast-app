@@ -1,6 +1,6 @@
-import { StyledErrorWrapper, StyledErrorMessage, StyledErrorIcon, StyledErrorContainer } from './styled';
+import { StyledErrorWrapper, StyledErrorMessage, StyledErrorImg, StyledErrorContainer } from './styled';
 import { ErrorNotificationProps } from './interface';
-import { ERROR_MESSAGE, LOCATION_PERMISSION_ERROR_MESSAGE } from '../../constants';
+import { ERROR_MESSAGE, LOCATION_PERMISSION_ERROR_MESSAGE, WARNING_ICON_ALT, WARNING_ICON_URL } from '../../constants';
 
 const ErrorNotification: React.FC<ErrorNotificationProps> = ({
   locationPermissionDenied = false,
@@ -9,7 +9,7 @@ const ErrorNotification: React.FC<ErrorNotificationProps> = ({
   return (
     <StyledErrorWrapper>
       <StyledErrorContainer>
-        <StyledErrorIcon>⚠</StyledErrorIcon>
+        <StyledErrorImg src={WARNING_ICON_URL} alt={WARNING_ICON_ALT}/>
         {locationPermissionDenied ? (
           <StyledErrorMessage>{LOCATION_PERMISSION_ERROR_MESSAGE}</StyledErrorMessage>
         ) : (

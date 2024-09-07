@@ -34,5 +34,5 @@ export const StyledDailyForecastContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px 10px;
+  margin: 20px;
 `;

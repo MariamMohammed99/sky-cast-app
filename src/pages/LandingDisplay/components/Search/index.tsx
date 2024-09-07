@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SEARCH_CITY_URL } from '../../../../app/services/constants';
@@ -6,7 +5,8 @@ import locationAxiosInstance from '../../../../app/services/locationAxios';
 import {
   NO_SEARCH_RESULTS_TEXT,
   SEARCH_DELAY,
-  SEARCH_ICON,
+  SEARCH_ICON_ALT,
+  SEARCH_ICON_URL,
   SEARCH_LOADING_SIZE,
   SEARCH_PLACEHOLDER,
 } from '../../../../common/constants';
@@ -21,7 +21,7 @@ import {
   StyledResultsContainer,
   StyledSearchBar,
   StyledSearchContainer,
-  StyledSearchIcon,
+  StyledSearchImg,
   StyledSearchInput,
 } from './styled';
 import Loading from '../../../../common/components/Loading';
@@ -30,7 +30,8 @@ const Search: React.FC<SearchProps> = ({ userLocation }) => {
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const debouncedValue = useDebounce(query, SEARCH_DELAY);
-  const [searchResults, setSearchResults] = useState<LocationData[] | undefined>(undefined);
+  const [searchResults, setSearchResults] = useState<LocationData[]>([]);
+  const [manuallyClearedResults, setManuallyClearedResults] = useState<boolean>(false);
 
   const params = useMemo(
     () => constructSearchParams(userLocation.countryCode, debouncedValue),
@@ -38,19 +39,23 @@ const Search: React.FC<SearchProps> = ({ userLocation }) => {
   );
 
   const { data, loading } = useFetchData(
-    debouncedValue && query ? SEARCH_CITY_URL : '',
+    debouncedValue && query && debouncedValue === query ? SEARCH_CITY_URL : '',
     locationAxiosInstance,
     { params },
     true,
   );
 
   useEffect(() => {
-    setSearchResults(data);
+    if (data !== null) {
+      setSearchResults(data);
+      setManuallyClearedResults(false);
+    }
   }, [data]);
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
-    if (!event.target.value) setSearchResults(undefined);
+    setSearchResults([]);
+    setManuallyClearedResults(true);
   };
 
   const handleClick = (latitude: number, longitude: number) => {
@@ -71,7 +76,7 @@ const Search: React.FC<SearchProps> = ({ userLocation }) => {
           onChange={onChangeHandler}
           value={query}
         />
-        <StyledSearchIcon>{SEARCH_ICON}</StyledSearchIcon>
+        <StyledSearchImg src={SEARCH_ICON_URL} alt={SEARCH_ICON_ALT} />
       </StyledSearchBar>
 
       {loading ? (
@@ -79,24 +84,29 @@ const Search: React.FC<SearchProps> = ({ userLocation }) => {
           <Loading size={SEARCH_LOADING_SIZE} />
         </StyledResultsContainer>
       ) : (
-        debouncedValue &&
         query &&
-        searchResults && (
+        (searchResults.length > 0 ? (
           <StyledResultsContainer>
-            {searchResults.length > 0 ? (
-              searchResults.map((item: LocationData) => (
-                <StyledResultItem
-                  key={`${item.latitude}-${item.longitude}`}
-                  onClick={() => handleClick(item.latitude, item.longitude)}
-                >
-                  {`${item.city}, ${item.region}`}
-                </StyledResultItem>
-              ))
-            ) : (
-              <StyledEmptyResultItem>{NO_SEARCH_RESULTS_TEXT}</StyledEmptyResultItem>
-            )}
+            {searchResults.map((item: LocationData) => (
+              <StyledResultItem
+                key={`${item.latitude}-${item.longitude}`}
+                onClick={() => handleClick(item.latitude, item.longitude)}
+              >
+                {`${item.city}, ${item.region}`}
+              </StyledResultItem>
+            ))}
           </StyledResultsContainer>
-        )
+        ) : (
+          data &&
+          data.length === 0 &&
+          query === debouncedValue &&
+          searchResults.length === 0 &&
+          !manuallyClearedResults && (
+            <StyledResultsContainer>
+              <StyledEmptyResultItem>{NO_SEARCH_RESULTS_TEXT}</StyledEmptyResultItem>
+            </StyledResultsContainer>
+          )
+        ))
       )}
     </StyledSearchContainer>
   );

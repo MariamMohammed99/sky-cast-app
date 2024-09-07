@@ -2,19 +2,19 @@ import { useEffect, useMemo } from 'react';
 import { CURRENT_WEATHER_URL } from '../../app/services/constants';
 import locationAxiosInstance from '../../app/services/locationAxios';
 import weatherAxiosInstance from '../../app/services/weatherAxios';
+import ErrorNotification from '../../common/components/ErrorNotification';
+import Loading from '../../common/components/Loading';
+import { BG_DAY_COLOR, BG_NIGHT_COLOR, LOADING_SIZE } from '../../common/constants';
 import { AvgWeather } from '../../common/interfaces';
 import { constructCityUrl } from '../../common/utils/constructCityUrl';
 import { constructCurrentWeatherParams } from '../../common/utils/constructParams';
+import { convertDate } from '../../common/utils/convertDate';
 import useFetchData from '../../hooks/useFetchData';
 import useGeolocation from '../../hooks/useGeolocation';
 import DailyForecast from './components/DailyForecast';
-import { StyledLandingContainer, StyledLandingWrapper, StyledTemperatureContainer } from './styled';
-import { convertDate } from '../../common/utils/convertDate';
-import { LandingDisplayPageProps } from './interface';
-import { BG_DAY_COLOR, BG_NIGHT_COLOR, LOADING_SIZE } from '../../common/constants';
 import MainHeading from './components/MainHeading';
-import Loading from '../../common/components/Loading';
-import ErrorNotification from '../../common/components/ErrorNotification';
+import { LandingDisplayPageProps } from './interface';
+import { StyledLandingContainer, StyledLandingWrapper, StyledTemperatureContainer } from './styled';
 
 const LandingDisplayPage: React.FC<LandingDisplayPageProps> = ({ setBackgroundColor }) => {
   const { coordinates, geolocationError, loadingGeolocation, permissionDenied } = useGeolocation();
@@ -31,6 +31,7 @@ const LandingDisplayPage: React.FC<LandingDisplayPageProps> = ({ setBackgroundCo
     () => constructCurrentWeatherParams(coordinates?.latitude, coordinates?.longitude),
     [coordinates],
   );
+
   const {
     data: weatherData,
     loading: loadingWeather,
@@ -39,27 +40,23 @@ const LandingDisplayPage: React.FC<LandingDisplayPageProps> = ({ setBackgroundCo
     params: weatherParams,
   });
 
+  const isDayTime = useMemo(() => weatherData?.currentCondition?.isDayTime, [weatherData]);
+
   useEffect(() => {
-    if (weatherData && weatherData.currentCondition) {
-      if (weatherData.currentCondition?.isDayTime) {
+    if (weatherData) {
+      if (isDayTime) {
         setBackgroundColor(BG_DAY_COLOR);
       } else {
         setBackgroundColor(BG_NIGHT_COLOR);
       }
     }
-  }, [weatherData, setBackgroundColor]);
-
+  }, [weatherData, isDayTime, setBackgroundColor]);
 
   if (geolocationError && permissionDenied) return <ErrorNotification locationPermissionDenied={permissionDenied} />;
 
   if (geolocationError || errorUserCity || errorWeather) return <ErrorNotification />;
-  
+
   if (loadingGeolocation || loadingUserCity || loadingWeather) return <Loading size={LOADING_SIZE} />;
-
-  console.log("coordinates", coordinates)
-  console.log("userLocationData", userLocationData)
-
-  console.log("weatherData", weatherData)
 
   if (!coordinates || !userLocationData || !weatherData) return null;
 
@@ -77,14 +74,10 @@ const LandingDisplayPage: React.FC<LandingDisplayPageProps> = ({ setBackgroundCo
             <DailyForecast
               key={index}
               day={convertDate(item.date)}
-              temperature={item.avgTempC}
-              image={
-                weatherData.currentCondition?.isDayTime ? item.hourly[1].weatherIconUrl : item.hourly[0].weatherIconUrl
-              }
-              description={
-                weatherData.currentCondition?.isDayTime ? item.hourly[1].weatherDesc : item.hourly[0].weatherDesc
-              }
-              isDayTime={weatherData.currentCondition?.isDayTime}
+              avgTemp={item.avgTempC}
+              image={isDayTime ? item.hourly[1].weatherIconUrl : item.hourly[0].weatherIconUrl}
+              description={isDayTime ? item.hourly[1].weatherDesc : item.hourly[0].weatherDesc}
+              isDayTime={isDayTime}
             />
           ))}
         </StyledTemperatureContainer>
