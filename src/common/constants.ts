@@ -39,4 +39,6 @@ export const TODAY_TEXT = 'Today';
 export const TONIGHT_TEXT = 'Tonight';
 export const TEMPERATURE = '{{temp}}°C';
 export const FEELS_LIKE = 'Feels like ';
+export const OVER_WEEK_TEXT = 'Temperature Over Week';
+export const LAST_MONTH_TEXT = 'Temperature Last Month';
 

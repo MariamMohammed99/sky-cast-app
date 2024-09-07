@@ -6,7 +6,7 @@ import weatherAxiosInstance from '../../app/services/weatherAxios';
 import ErrorNotification from '../../common/components/ErrorNotification';
 import Loading from '../../common/components/Loading';
 import MainLocation from '../../common/components/MainLocation';
-import { DAY_COLOR, LOADING_SIZE, NIGHT_COLOR, TEMPERATURE, WRONG_URL_ERROR_MESSAGE } from '../../common/constants';
+import { DAY_COLOR, LAST_MONTH_TEXT, LOADING_SIZE, NIGHT_COLOR, OVER_WEEK_TEXT, TEMPERATURE, WRONG_URL_ERROR_MESSAGE } from '../../common/constants';
 import { constructHistoricalWeatherParams } from '../../common/utils/constructParams';
 import useFetchData from '../../hooks/useFetchData';
 import useWeatherAndLocationFetch from '../../hooks/useWeatherLocationFetch';
@@ -130,13 +130,13 @@ const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
           ></CurrentForecast>
 
           <StyledChartWrapper style={{ backgroundColor }}>
-            <StyledChartHeader>Temperature Over Week</StyledChartHeader>
+            <StyledChartHeader>{OVER_WEEK_TEXT}</StyledChartHeader>
             <Table data={weekWeather} />
           </StyledChartWrapper>
         </StyledForeCastWrapper>
 
         <StyledChartWrapper style={{ backgroundColor }}>
-          <StyledChartHeader>Temperature Last Month</StyledChartHeader>
+          <StyledChartHeader>{LAST_MONTH_TEXT}</StyledChartHeader>
           <LineChart data={lastMonthWeather} />
         </StyledChartWrapper>
       </StyledDashboardContainer>
