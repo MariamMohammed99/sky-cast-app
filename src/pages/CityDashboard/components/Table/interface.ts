@@ -1,3 +1,10 @@
+export interface TableData {
+  date: string;
+  maxTemp: string;
+  minTemp: string;
+  avgTemp: string;
+}
+
 export interface TableProps {
-  data: { name: string; age: number; city: string }[];
+  data: TableData[];
 }

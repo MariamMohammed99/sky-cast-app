@@ -6,6 +6,7 @@ export const StyledDashboardWrapper = styled.div`
   padding-top: 40px;
   display: flex;
   justify-content: center;
+  padding-bottom: 20px;
 `;
 
 export const StyledDashboardContainer = styled.div`
@@ -36,8 +37,22 @@ export const StyledChartWrapper = styled.div<Omit<StyledBackgroundProps, 'backgr
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   height: max-content;
   width: 100%;
-  max-width: 50vw;
   padding: 20px;
+  gap:20px;
 `;
 
 export const StyledChartHeader = styled.h3``;
+
+export const StyledForeCastWrapper = styled.div`
+  width: 100%;
+  padding-top: 20px;
+  display: flex;
+  gap: 20px;
+  align-items:center;
+  margin-bottom:20px;
+
+    @media (max-width: 950px) {
+    font-size: 20px;
+    flex-direction:column;
+  }
+`;

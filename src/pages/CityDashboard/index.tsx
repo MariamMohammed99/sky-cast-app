@@ -11,19 +11,20 @@ import { constructHistoricalWeatherParams } from '../../common/utils/constructPa
 import useFetchData from '../../hooks/useFetchData';
 import useWeatherAndLocationFetch from '../../hooks/useWeatherLocationFetch';
 import { PageProps } from '../interface';
-import BarChart from './components/BarChart';
 import LineChart from './components/LineChart';
-import Table from './components/Table';
 import {
   StyledChartHeader,
   StyledChartWrapper,
   StyledDashboardContainer,
   StyledDashboardWrapper,
+  StyledForeCastWrapper,
   StyledLocationWrapper,
 } from './styled';
 import CurrentForecast from '../../common/components/CurrentForecast';
 import { convertDate } from '../../common/utils/convertDate';
 import { constructSummaryDetails } from '../../common/utils/constructSummaryDetails';
+import { AvgWeather } from '../../common/interfaces';
+import Table from './components/Table';
 
 const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
   const location = useLocation();
@@ -37,7 +38,7 @@ const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
       longitude,
       locationAxiosInstance,
       weatherAxiosInstance,
-      singleDay: true,
+      singleDay: false,
       setBackgroundColor,
     });
 
@@ -68,21 +69,25 @@ const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
             weatherDesc: weatherData.weather[0].hourly[0].weatherDesc,
           };
     }
-    return { weatherIconUrl: '', weatherDesc: '' }; // Default return to avoid errors
+    return { weatherIconUrl: '', weatherDesc: '' };
   }, [weatherData]);
-  
+
+  const weekWeather = useMemo(() => {
+    if (weatherData) {
+      return weatherData.weather.map((item: AvgWeather) => {
+        return {
+          date: item.date,
+          maxTemp: TEMPERATURE.replace(`{{temp}}`, item.maxTempC),
+          avgTemp: TEMPERATURE.replace(`{{temp}}`, item.avgTempC),
+          minTemp: TEMPERATURE.replace(`{{temp}}`, item.minTempC),
+        };
+      });
+    }
+    return [];
+  }, [weatherData]);
+
   console.log('current', weatherData);
   console.log('historical', historyData);
-
-  const data = [
-    { label: 'A', value: 30 },
-    { label: 'B', value: 80 },
-    { label: 'C', value: 45 },
-    { label: 'D', value: 60 },
-    { label: 'E', value: 20 },
-    { label: 'F', value: 90 },
-    { label: 'G', value: 55 },
-  ];
 
   const temp = [
     { day: 'A', temp: '30' },
@@ -92,13 +97,6 @@ const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
     { day: 'E', temp: '20' },
     { day: 'F', temp: '90' },
     { day: 'G', temp: '55' },
-  ];
-
-  const table = [
-    { name: 'mariam', age: 24, city: 'october' },
-    { name: 'ahmed', age: 25, city: 'hadayek' },
-    { name: 'mama', age: 65, city: 'abdeen' },
-    { name: 'baba', age: 75, city: 'haram' },
   ];
 
   if (!historyParams) return <ErrorNotification customizedError={WRONG_URL_ERROR_MESSAGE} />;
@@ -114,24 +112,28 @@ const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
         <StyledLocationWrapper>
           <MainLocation location={locationData[0]} isDayTime={isDayTime} clickable={'false'} onClick={() => {}} />
         </StyledLocationWrapper>
-        <CurrentForecast
-          date={convertDate(weatherData.weather[0].date, true)}
-          weekName={convertDate(weatherData.weather[0].date)}
-          temp={TEMPERATURE.replace('{{temp}}', weatherData.currentCondition?.tempC)}
-          feelsLike={TEMPERATURE.replace('{{temp}}', weatherData.currentCondition?.feelsLikeC)}
-          image={weatherIconUrl}
-          description={weatherDesc}
-          isDayTime={weatherData.currentCondition?.isDayTime}
-          summaryData={constructSummaryDetails(weatherData.currentCondition!)}
-        ></CurrentForecast>
-        <h1>My D3 Bar Chart</h1>
-        <BarChart data={data} />
+        <StyledForeCastWrapper>
+          <CurrentForecast
+            date={convertDate(weatherData.weather[0].date, true)}
+            weekName={convertDate(weatherData.weather[0].date)}
+            temp={TEMPERATURE.replace('{{temp}}', weatherData.currentCondition?.tempC)}
+            feelsLike={TEMPERATURE.replace('{{temp}}', weatherData.currentCondition?.feelsLikeC)}
+            image={weatherIconUrl}
+            description={weatherDesc}
+            isDayTime={weatherData.currentCondition?.isDayTime}
+            summaryData={constructSummaryDetails(weatherData.currentCondition!)}
+          ></CurrentForecast>
+
+          <StyledChartWrapper style={{ backgroundColor }}>
+            <StyledChartHeader>Temperature Over Week</StyledChartHeader>
+            <Table data={weekWeather} />
+          </StyledChartWrapper>
+        </StyledForeCastWrapper>
+
         <StyledChartWrapper style={{ backgroundColor }}>
           <StyledChartHeader>My D3 Line Chart</StyledChartHeader>
           <LineChart data={temp} />
         </StyledChartWrapper>
-        <h1>My D3 Table</h1>
-        <Table data={table} />
       </StyledDashboardContainer>
     </StyledDashboardWrapper>
   );
