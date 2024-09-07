@@ -11,7 +11,7 @@
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix",
     "format": "prettier --write src/ --config ./.prettierrc.cjs",
-    "test": "jest",
+    "test": "jest --env=jsdom",
     "coverage": "jest --coverage"
   },
   "dependencies": {
