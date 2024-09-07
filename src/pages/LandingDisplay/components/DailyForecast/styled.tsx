@@ -11,6 +11,13 @@ export const StyledDailyForecastWrapper = styled.div<Omit<StyledDailyForecastPro
   flex: 1;
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: max-content;
+  flex-grow: 1;
+  flex-basis: 0;
+
+  @media (max-width: 814px) {
+    flex-basis: calc(33.33% - 15px);
+  }
 `;
 
 export const StyledDayTitle = styled.h3`
@@ -27,7 +34,6 @@ export const StyledTemperature = styled.p`
 export const StyledImageWrapper = styled.div`
   width: 100%;
   margin: 0 auto;
-
   display: flex;
   align-items: center;
   justify-content: center;
