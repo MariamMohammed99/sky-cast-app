@@ -4,7 +4,7 @@ describe('convertDate', () => {
   it('should format date without year when includeYear is not sent', () => {
     const dateString = '2024-09-07';
     const result = convertDate(dateString);
-    expect(result).toBe('Sep 7');
+    expect(result).toBe('Sat');
   });
 
   it('should format date with year when includeYear is sent', () => {
@@ -14,8 +14,8 @@ describe('convertDate', () => {
   });
 
   it('should handle dates without day and month properly', () => {
-    const dateString = '2024-01-01T00:00:00Z';
+    const dateString = '2024-09-07T00:00:00Z';
     const result = convertDate(dateString, true);
-    expect(result).toBe('Jan 1, 2024');
+    expect(result).toBe('Sep 7, 2024');
   });
 });

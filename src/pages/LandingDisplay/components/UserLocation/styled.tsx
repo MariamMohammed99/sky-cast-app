@@ -18,6 +18,11 @@ export const StyledCountryHeader = styled.h3`
   font-size: 1rem;
 `;
 
+export const StyledDayHeader = styled.h3`
+  margin-top: 5px;
+  font-size: 0.8rem;
+`;
+
 export const StyledCityHeader = styled.h1`
   margin: 0;
 `;

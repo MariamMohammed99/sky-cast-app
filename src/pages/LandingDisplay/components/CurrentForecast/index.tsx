@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { DAY_COLOR, NIGHT_COLOR, TODAY_TEXT, TONIGHT_TEXT } from '../../../../common/constants';
+import { DAY_COLOR, NIGHT_COLOR } from '../../../../common/constants';
 import { CurrentForecastProps } from './interface';
 import {
   StyledDailyForecastContent,
@@ -9,14 +9,13 @@ import {
   StyledTemperature,
 } from './styled';
 
-const CurrentForecast: React.FC<CurrentForecastProps> = ({ day, minTemp, maxTemp, image, description, isDayTime }) => {
+const CurrentForecast: React.FC<CurrentForecastProps> = ({ minTemp, maxTemp, image, description, weekName, isDayTime }) => {
   const backgroundColor = useMemo(() => (isDayTime ? DAY_COLOR : NIGHT_COLOR), [isDayTime]);
-  const dayTitle = useMemo(() => (isDayTime ? TODAY_TEXT : TONIGHT_TEXT), [isDayTime]);
 
   return (
     <StyledDailyForecastWrapper style={{ backgroundColor }}>
       <StyledDailyForecastContent>
-        <StyledDayTitle>{`${dayTitle} ${day}`}</StyledDayTitle>
+        <StyledDayTitle>{weekName}</StyledDayTitle>
         <StyledImageWrapper>
           <img src={image} alt={description} />
         </StyledImageWrapper>

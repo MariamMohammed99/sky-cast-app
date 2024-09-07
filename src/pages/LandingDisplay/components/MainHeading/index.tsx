@@ -31,11 +31,16 @@ const MainHeading: React.FC<MainHeadingProps> = ({ userLocation, weatherData, la
   return (
     <StyledLandingHeader>
       <StyledLocationSearchWrapper>
-        <UserLocation userLocation={userLocation[0]} onClick={handleCityClick} />
+        <UserLocation
+          userLocation={userLocation[0]}
+          date={convertDate(weatherData.weather[0].date, true)}
+          isDayTime
+          onClick={handleCityClick}
+        />
         <Search userLocation={userLocation[0]} />
       </StyledLocationSearchWrapper>
       <CurrentForecast
-        day={convertDate(weatherData.weather[0].date)}
+        weekName={convertDate(weatherData.weather[0].date)}
         minTemp={weather[0].minTempC}
         maxTemp={weather[0].maxTempC}
         image={weatherIconUrl}

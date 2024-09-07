@@ -4,7 +4,7 @@ export const StyledLandingHeader = styled.div`
   display: flex;
   justify-content: space-between;
   width: 80%;
-  gap: 20px;
+  gap: 15px;
   align-items: flex-start;
 
   @media (max-width: 571px) {
@@ -17,6 +17,6 @@ export const StyledLocationSearchWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 30px;
+  gap: 10px;
   flex: 2;
 `;
