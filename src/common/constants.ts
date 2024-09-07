@@ -37,3 +37,6 @@ export const NETWORK_ERROR_MESSAGE =
 
 export const TODAY_TEXT = 'Today';
 export const TONIGHT_TEXT = 'Tonight';
+export const TEMPERATURE = '{{temp}}°C';
+export const FEELS_LIKE = 'Feels like ';
+

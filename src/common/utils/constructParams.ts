@@ -10,6 +10,7 @@ import { SearchRequestParams } from '../interfaces';
 export const constructCurrentWeatherParams = (
   latitude: number | string | undefined | null,
   longitude: number | string | undefined | null,
+  forSingleDay: boolean,
   monthlyAvg?: boolean,
 ) => {
   if (!latitude || !longitude) return null;
@@ -17,7 +18,7 @@ export const constructCurrentWeatherParams = (
   if (!canBeConverted) return null;
   const mca = monthlyAvg ? 'yes' : 'no';
   return {
-    tp: AVG_TIME_INTERVAL,
+    tp: forSingleDay ? AVG_TIME_INTERVAL : 1,
     q: `${latitude},${longitude}`,
     num_of_days: WEATHER_DAYS_NO,
     mca,

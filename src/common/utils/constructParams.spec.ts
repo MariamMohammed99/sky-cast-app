@@ -16,11 +16,12 @@ describe('Utility Functions', () => {
       const latitude = 40.7128;
       const longitude = -74.006;
       const monthlyAvg = true;
+      const forSingleDay = true;
 
-      const result = constructCurrentWeatherParams(latitude, longitude, monthlyAvg);
+      const result = constructCurrentWeatherParams(latitude, longitude, forSingleDay, monthlyAvg);
 
       expect(result).toEqual({
-        tp: AVG_TIME_INTERVAL,
+        tp: 1,
         q: '40.7128,-74.006',
         num_of_days: WEATHER_DAYS_NO,
         mca: 'yes',
@@ -31,8 +32,9 @@ describe('Utility Functions', () => {
     it('should return correct parameters when valid latitude and longitude are provided', () => {
         const latitude = 40.7128;
         const longitude = -74.006;
-  
-        const result = constructCurrentWeatherParams(latitude, longitude);
+        const forSingleDay = false;
+
+        const result = constructCurrentWeatherParams(latitude, longitude, forSingleDay);
   
         expect(result).toEqual({
           tp: AVG_TIME_INTERVAL,
@@ -45,13 +47,13 @@ describe('Utility Functions', () => {
 
       
     it('should return null when latitude or longitude is missing', () => {
-      expect(constructCurrentWeatherParams(null, -74.006)).toBeNull();
-      expect(constructCurrentWeatherParams(40.7128, null)).toBeNull();
+      expect(constructCurrentWeatherParams(null, -74.006, true)).toBeNull();
+      expect(constructCurrentWeatherParams(40.7128, null, true)).toBeNull();
     });
 
     it('should return null when latitude or longitude is not a number', () => {
-      expect(constructCurrentWeatherParams('invalid', -74.006)).toBeNull();
-      expect(constructCurrentWeatherParams(40.7128, 'invalid')).toBeNull();
+      expect(constructCurrentWeatherParams('invalid', -74.006, true)).toBeNull();
+      expect(constructCurrentWeatherParams(40.7128, 'invalid', true)).toBeNull();
     });
   });
 

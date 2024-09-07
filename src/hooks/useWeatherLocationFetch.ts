@@ -11,12 +11,15 @@ const useWeatherLocationFetch = ({
   longitude,
   locationAxiosInstance,
   weatherAxiosInstance,
+  singleDay,
   setBackgroundColor,
 }: UseWeatherAndLocationProps) => {
-
   const locationUrl = useMemo(() => constructCityUrl(latitude, longitude), [latitude, longitude]);
 
-  const weatherParams = useMemo(() => constructCurrentWeatherParams(latitude, longitude), [latitude, longitude]);
+  const weatherParams = useMemo(
+    () => constructCurrentWeatherParams(latitude, longitude, singleDay),
+    [latitude, longitude, singleDay],
+  );
 
   const {
     data: locationData,
@@ -43,7 +46,6 @@ const useWeatherLocationFetch = ({
       }
     }
   }, [weatherData, isDayTime, setBackgroundColor]);
-  
 
   return {
     locationData,
@@ -52,7 +54,7 @@ const useWeatherLocationFetch = ({
     weatherData,
     loadingWeather,
     errorWeather,
-    isDayTime
+    isDayTime,
   };
 };
 

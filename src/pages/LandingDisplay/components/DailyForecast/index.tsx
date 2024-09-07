@@ -20,7 +20,7 @@ const DailyForecast: React.FC<DailyForecastProps> = ({ day, avgTemp, image, desc
           <StyledDailyForecastImg src={image} alt={description} />
         </StyledImageWrapper>
         <StyledTemperature>{description}</StyledTemperature>
-        <StyledTemperature>{avgTemp}°C</StyledTemperature>
+        <StyledTemperature>{avgTemp}</StyledTemperature>
       </StyledDailyForecastContent>
     </StyledDailyForecastWrapper>
   );

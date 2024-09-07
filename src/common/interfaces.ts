@@ -103,5 +103,6 @@ export interface UseWeatherAndLocationProps {
   longitude: number | null | undefined | string;
   locationAxiosInstance: AxiosInstance;
   weatherAxiosInstance: AxiosInstance;
+  singleDay: boolean;
   setBackgroundColor: (color: string) => void;
 }

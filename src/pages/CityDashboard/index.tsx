@@ -34,6 +34,7 @@ const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
       longitude,
       locationAxiosInstance,
       weatherAxiosInstance,
+      singleDay: true,
       setBackgroundColor,
     });
 

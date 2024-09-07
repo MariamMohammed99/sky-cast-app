@@ -7,7 +7,7 @@ export const StyledLandingHeader = styled.div`
   gap: 15px;
   align-items: flex-start;
 
-  @media (max-width: 571px) {
+  @media (max-width: 790px) {
     flex-direction: column;
     align-items: stretch;
   }

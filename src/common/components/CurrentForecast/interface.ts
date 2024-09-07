@@ -1,8 +1,9 @@
 export interface CurrentForecastProps {
-  minTemp: string;
-  maxTemp: string;
+  temp: string;
+  feelsLike: string;
   image: string;
   description: string;
   weekName: string;
   isDayTime: boolean;
+  date: string;
 }

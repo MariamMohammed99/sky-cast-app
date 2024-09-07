@@ -6,6 +6,7 @@ import { MainHeadingProps } from './interface';
 import { StyledLandingHeader, StyledLocationSearchWrapper } from './styled';
 import { useMemo } from 'react';
 import MainLocation from '../../../../common/components/MainLocation';
+import { TEMPERATURE } from '../../../../common/constants';
 
 const MainHeading: React.FC<MainHeadingProps> = ({ userLocation, weatherData, latitude, longitude }) => {
   const navigate = useNavigate();
@@ -31,19 +32,14 @@ const MainHeading: React.FC<MainHeadingProps> = ({ userLocation, weatherData, la
   return (
     <StyledLandingHeader>
       <StyledLocationSearchWrapper>
-        <MainLocation
-          location={userLocation[0]}
-          date={convertDate(weatherData.weather[0].date, true)}
-          isDayTime
-          clickable={'true'}
-          onClick={handleCityClick}
-        />
+        <MainLocation location={userLocation[0]} isDayTime clickable={'true'} onClick={handleCityClick} />
         <Search userLocation={userLocation[0]} />
       </StyledLocationSearchWrapper>
       <CurrentForecast
-        weekName={convertDate(weatherData.weather[0].date)}
-        minTemp={weather[0].minTempC}
-        maxTemp={weather[0].maxTempC}
+        date={convertDate(weather[0].date, true)}
+        weekName={convertDate(weather[0].date)}
+        temp={TEMPERATURE.replace('{{temp}}', currentCondition!.tempC)}
+        feelsLike={TEMPERATURE.replace('{{temp}}', currentCondition!.feelsLikeC)}
         image={weatherIconUrl}
         description={weatherDesc}
         isDayTime={weatherData.currentCondition!.isDayTime}
