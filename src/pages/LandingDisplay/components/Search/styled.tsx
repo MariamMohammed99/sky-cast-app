@@ -51,12 +51,14 @@ export const StyledResultsContainer = styled.div`
   width: 100%;
   border-radius: 20px;
   overflow-x: hidden;
+  min-height: 50px;
+  justify-content:center;
 `;
 
 export const StyledResultItem = styled.div`
   transition: transform 0.1s;
   padding: 0 15px;
-  min-height: 35px;
+  min-height: 50px;
   align-items: center;
   display: flex;
   cursor: pointer;
@@ -68,9 +70,9 @@ export const StyledResultItem = styled.div`
 `;
 
 export const StyledEmptyResultItem = styled.div`
-  min-height: 25px;
+  min-height: 50px;
   align-items: center;
-  padding: 0 15pxx;
+  padding: 0 15px;
   display: flex;
   min-height: 35px;
 `;

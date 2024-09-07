@@ -13,12 +13,12 @@ export const LOADING_SIZE = 100;
 
 //#region search consts
 
-export const SEARCH_LOADING_SIZE = 40;
+export const SEARCH_LOADING_SIZE = 35;
 export const SEARCH_ICON_URL = '/assets/icons/search.svg';
 export const SEARCH_ICON_ALT = 'Search Icon';
 export const NO_SEARCH_RESULTS_TEXT = 'No results found';
 export const SEARCH_PLACEHOLDER = 'Search by city name in {{country}}';
-export const SEARCH_DELAY = 500;
+export const SEARCH_DELAY = 1000;
 
 //#endregion
 
