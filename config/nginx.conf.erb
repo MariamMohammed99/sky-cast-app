@@ -1,0 +1,25 @@
+worker_processes 1;
+events { worker_connections 1024; }
+
+http {
+  include       mime.types;
+  default_type  application/octet-stream;
+
+  sendfile        on;
+  keepalive_timeout  65;
+
+  server {
+    listen <%= ENV["PORT"] %>;
+
+    location / {
+      root /app/dist;
+      try_files $uri $uri/ /index.html;
+    }
+
+    # Caching static assets
+    location ~* \.(?:css|js|jpg|jpeg|gif|png|ico|woff|woff2|ttf|svg|eot|otf)$ {
+      expires 365d;
+      add_header Cache-Control "public, no-transform";
+    }
+  }
+}
