@@ -1,3 +1,3 @@
-export interface LandingDisplayPageProps {
+export interface PageProps {
     setBackgroundColor: (color: string) => void;
   }

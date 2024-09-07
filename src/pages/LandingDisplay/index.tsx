@@ -13,10 +13,10 @@ import useFetchData from '../../hooks/useFetchData';
 import useGeolocation from '../../hooks/useGeolocation';
 import DailyForecast from './components/DailyForecast';
 import MainHeading from './components/MainHeading';
-import { LandingDisplayPageProps } from './interface';
+import { PageProps } from '../interface';
 import { StyledLandingContainer, StyledLandingWrapper, StyledTemperatureContainer } from './styled';
 
-const LandingDisplayPage: React.FC<LandingDisplayPageProps> = ({ setBackgroundColor }) => {
+const LandingDisplayPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
   const { coordinates, geolocationError, loadingGeolocation, permissionDenied } = useGeolocation();
 
   const {
