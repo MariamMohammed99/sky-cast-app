@@ -1,18 +1,18 @@
+import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import { CURRENT_WEATHER_URL, HISTORICAL_WEATHER_URL } from '../../app/services/constants';
+import { HISTORICAL_WEATHER_URL } from '../../app/services/constants';
+import locationAxiosInstance from '../../app/services/locationAxios';
 import weatherAxiosInstance from '../../app/services/weatherAxios';
-import useFetchData from '../../hooks/useFetchData';
-import { constructCurrentWeatherParams, constructHistoricalWeatherParams } from '../../common/utils/constructParams';
-import { useEffect, useMemo } from 'react';
-import Loading from '../../common/components/Loading';
-import { BG_DAY_COLOR, BG_NIGHT_COLOR, LOADING_SIZE, WRONG_URL_ERROR_MESSAGE } from '../../common/constants';
 import ErrorNotification from '../../common/components/ErrorNotification';
+import Loading from '../../common/components/Loading';
+import { LOADING_SIZE, WRONG_URL_ERROR_MESSAGE } from '../../common/constants';
+import { constructHistoricalWeatherParams } from '../../common/utils/constructParams';
+import useFetchData from '../../hooks/useFetchData';
+import useWeatherAndLocationFetch from '../../hooks/useWeatherLocationFetch';
+import { PageProps } from '../interface';
 import BarChart from './components/BarChart';
 import LineChart from './components/LineChart';
 import Table from './components/Table';
-import { constructCityUrl } from '../../common/utils/constructCityUrl';
-import locationAxiosInstance from '../../app/services/locationAxios';
-import { PageProps } from '../interface';
 
 const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
   const location = useLocation();
@@ -21,34 +21,13 @@ const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
   const longitude = queryParams.get('longitude');
 
   const {
-    data: cityLocationData,
-    loading: loadingCity,
-    error: errorCity,
-  } = useFetchData(constructCityUrl(latitude, longitude), locationAxiosInstance, {
-    params: {},
-  });
-
-  const weatherParams = useMemo(() => constructCurrentWeatherParams(latitude, longitude), [latitude, longitude]);
-
-  const {
-    data: weatherData,
-    loading: loadingWeather,
-    error: errorWeather,
-  } = useFetchData(weatherParams ? CURRENT_WEATHER_URL : '', weatherAxiosInstance, {
-    params: weatherParams,
-  });
-
-  const isDayTime = useMemo(() => weatherData?.currentCondition?.isDayTime, [weatherData]);
-
-  useEffect(() => {
-    if (weatherData) {
-      if (isDayTime) {
-        setBackgroundColor(BG_DAY_COLOR);
-      } else {
-        setBackgroundColor(BG_NIGHT_COLOR);
-      }
-    }
-  }, [weatherData, isDayTime, setBackgroundColor]);
+    locationData,
+    loadingCity,
+    errorCity,
+    weatherData,
+    loadingWeather,
+    errorWeather,
+  } = useWeatherAndLocationFetch({latitude, longitude, locationAxiosInstance, weatherAxiosInstance, setBackgroundColor});
 
   const historyParams = useMemo(
     () => constructHistoricalWeatherParams(latitude, longitude, 'today'),
@@ -63,8 +42,8 @@ const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
     params: historyParams,
   });
 
-  console.log('city', cityLocationData);
-  console.log('current', historyData);
+  console.log('city', locationData);
+  console.log('current', weatherData);
   console.log('historical', historyData);
 
   const data = [

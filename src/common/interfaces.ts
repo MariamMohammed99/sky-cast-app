@@ -1,5 +1,7 @@
 //#region geolocation interfaces
 
+import { AxiosInstance } from 'axios';
+
 export interface Coordinates {
   latitude: number;
   longitude: number;
@@ -94,4 +96,12 @@ export interface UseAxiosResponse {
   data: unknown;
   loading: boolean;
   error: Error | null;
+}
+
+export interface UseWeatherAndLocationProps {
+  latitude: number | null | undefined | string;
+  longitude: number | null | undefined | string;
+  locationAxiosInstance: AxiosInstance;
+  weatherAxiosInstance: AxiosInstance;
+  setBackgroundColor: (color: string) => void;
 }
