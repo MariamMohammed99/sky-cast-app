@@ -1,13 +1,14 @@
 const jestConfig = {
   preset: 'ts-jest',
-  testEnvironment: 'jsdom',
+  testEnvironment: 'jest-environment-jsdom',
   reporters: ['default'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'],
-  setupFilesAfterEnv: ['./jest.setup.ts'],
+  setupFiles: ['./jest.setup.ts'],
   transform: {
     '^.+\\.(ts|tsx|js|jsx)$': ['ts-jest', { tsconfig: 'tsconfig.jest.json' }],
   },
+  
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
@@ -27,3 +28,4 @@ const jestConfig = {
 };
 
 module.exports = jestConfig;
+
