@@ -5,6 +5,7 @@ import locationAxiosInstance from '../../app/services/locationAxios';
 import weatherAxiosInstance from '../../app/services/weatherAxios';
 import ErrorNotification from '../../common/components/ErrorNotification';
 import Loading from '../../common/components/Loading';
+import MainLocation from '../../common/components/MainLocation';
 import { LOADING_SIZE, WRONG_URL_ERROR_MESSAGE } from '../../common/constants';
 import { constructHistoricalWeatherParams } from '../../common/utils/constructParams';
 import useFetchData from '../../hooks/useFetchData';
@@ -13,8 +14,7 @@ import { PageProps } from '../interface';
 import BarChart from './components/BarChart';
 import LineChart from './components/LineChart';
 import Table from './components/Table';
-import MainLocation from '../../common/components/MainLocation';
-import { StyledDashboardContainer, StyledLocationWrapper, StyledDashboardWrapper } from './styled';
+import { StyledDashboardContainer, StyledDashboardWrapper, StyledLocationWrapper } from './styled';
 
 const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
   const location = useLocation();
@@ -78,7 +78,7 @@ const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
   if (!historyParams) return <ErrorNotification customizedError={WRONG_URL_ERROR_MESSAGE} />;
   if (errorHistory || errorCity || errorWeather) return <ErrorNotification />;
 
-  if (loadingHistory || loadingCity || loadingWeather || !locationData) return <Loading size={LOADING_SIZE} />;
+  if (loadingHistory || loadingCity || loadingWeather) return <Loading size={LOADING_SIZE} />;
 
   return (
     <StyledDashboardWrapper>

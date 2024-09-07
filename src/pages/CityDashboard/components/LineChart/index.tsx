@@ -1,9 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
-
-interface LineChartProps {
-  data: { day: string; temp: number }[];
-}
+import { LineChartProps } from './interface';
 
 const LineChart: React.FC<LineChartProps> = ({ data }) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -19,28 +16,26 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
 
       svg.selectAll('*').remove(); // Clear previous content
 
-      const g = svg
-        .append('g')
-        .attr('transform', `translate(${margin.left},${margin.top})`);
+      const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
 
       // Define scales
       const xScale = d3
         .scalePoint<string>()
-        .domain(data.map(d => d.day))
+        .domain(data.map((d) => d.day))
         .range([0, innerWidth])
         .padding(0.5);
 
       const yScale = d3
         .scaleLinear()
-        .domain([0, d3.max(data, d => d.temp) || 0])
+        .domain([0, d3.max(data, (d) => d.temp) || 0])
         .nice()
         .range([innerHeight, 0]);
 
       // Define line generator
       const line = d3
         .line<{ day: string; temp: number }>()
-        .x(d => xScale(d.day) ?? 0) // Default to 0 if undefined
-        .y(d => yScale(d.temp) ?? 0); // Default to 0 if undefined
+        .x((d) => xScale(d.day) ?? 0) // Default to 0 if undefined
+        .y((d) => yScale(d.temp) ?? 0); // Default to 0 if undefined
 
       // Add the line path
       g.append('path')
@@ -52,19 +47,14 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
         .attr('stroke-width', 2);
 
       // Add x-axis
-      g.append('g')
-        .attr('transform', `translate(0,${innerHeight})`)
-        .call(d3.axisBottom(xScale));
+      g.append('g').attr('transform', `translate(0,${innerHeight})`).call(d3.axisBottom(xScale));
 
       // Add y-axis
-      g.append('g')
-        .call(d3.axisLeft(yScale));
+      g.append('g').call(d3.axisLeft(yScale));
     }
   }, [data]);
 
-  return (
-    <svg ref={svgRef} width={600} height={400}></svg>
-  );
+  return <svg ref={svgRef} width={600} height={400}></svg>;
 };
 
 export default LineChart;
