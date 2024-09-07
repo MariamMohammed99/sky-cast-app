@@ -12,8 +12,6 @@ export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
         height: 100vh;
         font-family: sans-serif;
         display:flex;
-        flex-direction:column;
-
-        
+        flex-direction:column; 
   }
 `;

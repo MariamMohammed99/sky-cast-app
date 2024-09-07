@@ -1,9 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
-
-interface TableProps {
-  data: { name: string; age: number; city: string }[];
-}
+import { TableProps } from './interface';
 
 const Table: React.FC<TableProps> = ({ data }) => {
   const tableRef = useRef<HTMLTableElement | null>(null);
@@ -17,26 +14,28 @@ const Table: React.FC<TableProps> = ({ data }) => {
       table.selectAll('*').remove();
 
       // Create table header
-      table.append('thead')
+      table
+        .append('thead')
         .append('tr')
         .selectAll('th')
         .data(headers)
         .enter()
         .append('th')
-        .text(d => d);
+        .text((d) => d);
 
       // Create table body
       const tbody = table.append('tbody');
 
-      tbody.selectAll('tr')
+      tbody
+        .selectAll('tr')
         .data(data)
         .enter()
         .append('tr')
         .selectAll('td')
-        .data(d => [d.name, d.age, d.city])
+        .data((d) => [d.name, d.age, d.city])
         .enter()
         .append('td')
-        .text(d => d);
+        .text((d) => d);
     }
   }, [data]);
 

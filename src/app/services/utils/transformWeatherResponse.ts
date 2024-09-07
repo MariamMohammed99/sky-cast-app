@@ -4,7 +4,6 @@ import { Astronomy, AvgWeather, CurrentCondition } from '../../../common/interfa
 export const transformCurrentCondition = (condition: any): CurrentCondition | undefined => {
   if (!condition) return undefined;
   return {
-    localObsDateTime: condition.localObsDateTime || undefined,
     isDayTime: condition.isdaytime === 'yes',
     tempC: condition.temp_C,
     weatherDesc: condition.weatherDesc[0].value,
@@ -13,7 +12,8 @@ export const transformCurrentCondition = (condition: any): CurrentCondition | un
     humidity: condition.humidity,
     uvIndex: condition.uvIndex,
     visibility: condition.visibility,
-    visibilityMiles: condition.visibilityMiles,
+    pressure: condition.pressure,
+    cloudCover: condition.cloudcover,
     chanceOfRain: condition.chanceofrain || undefined,
   };
 };

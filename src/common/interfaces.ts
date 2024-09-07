@@ -1,5 +1,7 @@
 //#region geolocation interfaces
 
+import { AxiosInstance } from 'axios';
+
 export interface Coordinates {
   latitude: number;
   longitude: number;
@@ -49,7 +51,6 @@ export interface LocationRespone {
 //#region weather interfaces
 
 export interface CurrentCondition {
-  localObsDateTime?: string;
   isDayTime: boolean;
   tempC: string;
   weatherDesc: string;
@@ -58,7 +59,8 @@ export interface CurrentCondition {
   humidity: string;
   uvIndex: string;
   visibility: string;
-  visibilityMiles: string;
+  pressure: string;
+  cloudCover: string;
   chanceOfRain?: string;
 }
 
@@ -94,4 +96,13 @@ export interface UseAxiosResponse {
   data: unknown;
   loading: boolean;
   error: Error | null;
+}
+
+export interface UseWeatherAndLocationProps {
+  latitude: number | null | undefined | string;
+  longitude: number | null | undefined | string;
+  locationAxiosInstance: AxiosInstance;
+  weatherAxiosInstance: AxiosInstance;
+  singleDay: boolean;
+  setBackgroundColor: (color: string) => void;
 }

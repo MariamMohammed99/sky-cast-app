@@ -17,12 +17,12 @@ export const StyledTitleBarWrapper = styled.div`
 
 export const StyledHeaderTitle = styled.h1`
   margin: 0;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: white;
   text-align: center;
 
-  @media (max-width: 768px) {
-    font-size: 1.7rem;
+  @media (max-width: 700px) {
+    font-size: 1.2rem;
   }
 `;
 

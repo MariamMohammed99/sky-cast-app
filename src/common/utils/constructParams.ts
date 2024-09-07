@@ -4,12 +4,13 @@ import {
   LIMIT_SEARCH_RESULTS,
   AVG_TIME_INTERVAL,
   WEATHER_DAYS_NO,
-} from '../../app/services/constants';
+} from '../../app/constants';
 import { SearchRequestParams } from '../interfaces';
 
 export const constructCurrentWeatherParams = (
   latitude: number | string | undefined | null,
   longitude: number | string | undefined | null,
+  forSingleDay: boolean,
   monthlyAvg?: boolean,
 ) => {
   if (!latitude || !longitude) return null;
@@ -19,7 +20,7 @@ export const constructCurrentWeatherParams = (
   return {
     tp: AVG_TIME_INTERVAL,
     q: `${latitude},${longitude}`,
-    num_of_days: WEATHER_DAYS_NO,
+    num_of_days: forSingleDay ? 1: WEATHER_DAYS_NO,
     mca,
     extra: EXTRA_PARAMS_WEATHER,
   };
