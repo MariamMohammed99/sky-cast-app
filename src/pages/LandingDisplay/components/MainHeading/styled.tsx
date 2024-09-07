@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 export const StyledLandingHeader = styled.div`
   display: flex;
@@ -17,6 +17,6 @@ export const StyledLocationSearchWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: 20px;
   flex: 2;
 `;
