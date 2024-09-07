@@ -1,3 +1,8 @@
+export interface LineChartData {
+  day: string;
+  temp: string;
+}
+
 export interface LineChartProps {
-  data: { day: string; temp: string }[];
+  data: LineChartData[];
 }

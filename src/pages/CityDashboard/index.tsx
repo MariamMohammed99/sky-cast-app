@@ -25,6 +25,7 @@ import { convertDate } from '../../common/utils/convertDate';
 import { constructSummaryDetails } from '../../common/utils/constructSummaryDetails';
 import { AvgWeather } from '../../common/interfaces';
 import Table from './components/Table';
+import { getDaysOfLastMonth } from '../../common/utils/constructMonthDays';
 
 const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
   const location = useLocation();
@@ -42,13 +43,17 @@ const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
       setBackgroundColor,
     });
 
+  const { startDate, endDate } = useMemo(() => getDaysOfLastMonth(), []);
+
   const historyParams = useMemo(
-    () => constructHistoricalWeatherParams(latitude, longitude, 'today'),
-    [latitude, longitude],
+    () =>
+      startDate &&
+      constructHistoricalWeatherParams(latitude, longitude, startDate.toDateString(), endDate.toDateString()),
+    [latitude, longitude, startDate],
   );
 
   const {
-    data: historyData,
+    data: historyWeather,
     loading: loadingHistory,
     error: errorHistory,
   } = useFetchData(historyParams ? HISTORICAL_WEATHER_URL : '', weatherAxiosInstance, {
@@ -86,25 +91,25 @@ const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
     return [];
   }, [weatherData]);
 
-  console.log('current', weatherData);
-  console.log('historical', historyData);
+  const lastMonthWeather = useMemo(() => {
+    if (historyWeather) {
+      return historyWeather.weather.map((item: AvgWeather, index: number) => {
+        return {
+          day: index+1,
+          temp: Number(item.avgTempC),
+        };
+      });
+    }
 
-  const temp = [
-    { day: 'A', temp: '30' },
-    { day: 'B', temp: '80' },
-    { day: 'C', temp: '45' },
-    { day: 'D', temp: '60' },
-    { day: 'E', temp: '20' },
-    { day: 'F', temp: '90' },
-    { day: 'G', temp: '55' },
-  ];
+    return [];
+  }, [historyWeather]);
 
   if (!historyParams) return <ErrorNotification customizedError={WRONG_URL_ERROR_MESSAGE} />;
   if (errorHistory || errorCity || errorWeather) return <ErrorNotification />;
 
   if (loadingHistory || loadingCity || loadingWeather) return <Loading size={LOADING_SIZE} />;
 
-  if (!weatherData || !historyData || !locationData) return null;
+  if (!weatherData || !historyWeather || !locationData) return null;
 
   return (
     <StyledDashboardWrapper>
@@ -131,8 +136,8 @@ const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
         </StyledForeCastWrapper>
 
         <StyledChartWrapper style={{ backgroundColor }}>
-          <StyledChartHeader>My D3 Line Chart</StyledChartHeader>
-          <LineChart data={temp} />
+          <StyledChartHeader>Temperature Last Month</StyledChartHeader>
+          <LineChart data={lastMonthWeather} />
         </StyledChartWrapper>
       </StyledDashboardContainer>
     </StyledDashboardWrapper>

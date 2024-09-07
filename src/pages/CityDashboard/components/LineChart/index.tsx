@@ -44,7 +44,10 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
 
       const yScale = d3
         .scaleLinear()
-        .domain([0, d3.max(data, (d) => Number(d.temp)) || 0])
+        .domain([
+          d3.min(data, (d) => Number(d.temp)) || 0,
+          d3.max(data, (d) => Number(d.temp)) || 0
+        ])
         .nice()
         .range([innerHeight, 0]);
 
