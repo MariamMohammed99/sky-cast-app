@@ -51,7 +51,6 @@ export interface LocationRespone {
 //#region weather interfaces
 
 export interface CurrentCondition {
-  localObsDateTime?: string;
   isDayTime: boolean;
   tempC: string;
   weatherDesc: string;
@@ -60,7 +59,8 @@ export interface CurrentCondition {
   humidity: string;
   uvIndex: string;
   visibility: string;
-  visibilityMiles: string;
+  pressure: string;
+  cloudCover: string;
   chanceOfRain?: string;
 }
 

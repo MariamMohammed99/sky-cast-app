@@ -14,7 +14,7 @@ export const StyledCurrentForecastWrapper = styled.div<Omit<StyledBackgroundProp
   height: max-content;
   width: fit-content;
 
-  @media (max-width: 790px) {
+  @media (max-width: 950px) {
     align-self: center;
   }
 `;
@@ -92,7 +92,7 @@ export const StyledWeatherTitleWrapper = styled.div`
   align-items: center;
   gap: 5px;
   flex: 2;
-  justify-content: space-evenly;
+    justify-content: space-between;
   align-self: flex-start;
 `;
 
@@ -114,5 +114,19 @@ export const StyledParagraph = styled.p`
   }
   @media (max-width: 287px) {
     font-size: 10px;
+  }
+`;
+
+export const StyledSummaryWrapper = styled.div`
+  display: flex;
+  gap: 20px;
+align-self:flex-start;
+
+  @media (max-width: 500px) {
+    gap: 10px;
+  }
+
+  @media (max-width: 224px) {
+    gap: 3px;
   }
 `;

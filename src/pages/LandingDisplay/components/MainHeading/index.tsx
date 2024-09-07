@@ -7,6 +7,7 @@ import { StyledLandingHeader, StyledLocationSearchWrapper } from './styled';
 import { useMemo } from 'react';
 import MainLocation from '../../../../common/components/MainLocation';
 import { TEMPERATURE } from '../../../../common/constants';
+import { constructSummaryDetails } from '../../../../common/utils/constructSummaryDetails';
 
 const MainHeading: React.FC<MainHeadingProps> = ({ userLocation, weatherData, latitude, longitude }) => {
   const navigate = useNavigate();
@@ -43,6 +44,7 @@ const MainHeading: React.FC<MainHeadingProps> = ({ userLocation, weatherData, la
         image={weatherIconUrl}
         description={weatherDesc}
         isDayTime={weatherData.currentCondition!.isDayTime}
+        summaryData={constructSummaryDetails(currentCondition!)}
       ></CurrentForecast>
     </StyledLandingHeader>
   );

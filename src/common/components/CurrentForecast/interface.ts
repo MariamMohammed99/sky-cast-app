@@ -1,3 +1,8 @@
+export interface SummaryData {
+  name: string;
+  value: string;
+}
+
 export interface CurrentForecastProps {
   temp: string;
   feelsLike: string;
@@ -6,4 +11,5 @@ export interface CurrentForecastProps {
   weekName: string;
   isDayTime: boolean;
   date: string;
+  summaryData: SummaryData[];
 }

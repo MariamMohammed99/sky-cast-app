@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { DAY_COLOR, FEELS_LIKE, NIGHT_COLOR, TODAY_TEXT, TONIGHT_TEXT } from '../../constants';
-import { CurrentForecastProps } from './interface';
+import { CurrentForecastProps, SummaryData } from './interface';
 import {
   StyledCurrentForecastContent,
   StyledCurrentForecastWrapper,
@@ -13,6 +13,7 @@ import {
   StyledWeatherDetails,
   StyledWeekName,
   StyledWeatherTitleWrapper,
+  StyledSummaryWrapper,
 } from './styled';
 
 const CurrentForecast: React.FC<CurrentForecastProps> = ({
@@ -23,6 +24,7 @@ const CurrentForecast: React.FC<CurrentForecastProps> = ({
   isDayTime,
   feelsLike,
   date,
+  summaryData,
 }) => {
   const backgroundColor = useMemo(() => (isDayTime ? DAY_COLOR : NIGHT_COLOR), [isDayTime]);
   const dayTitle = useMemo(() => (isDayTime ? TODAY_TEXT : TONIGHT_TEXT), [isDayTime]);
@@ -44,6 +46,14 @@ const CurrentForecast: React.FC<CurrentForecastProps> = ({
             <StyledParagraph>{`${FEELS_LIKE}${feelsLike}`}</StyledParagraph>
           </StyledWeatherColumnWrapper>
         </StyledWeatherDetails>
+        <StyledSummaryWrapper>
+          {summaryData.map((item: SummaryData, index: number) => (
+            <StyledWeatherTitleWrapper key={index}>
+              <StyledParagraph>{item.name}</StyledParagraph>
+              <StyledWeekName>{item.value}</StyledWeekName>
+            </StyledWeatherTitleWrapper>
+          ))}
+        </StyledSummaryWrapper>
       </StyledCurrentForecastContent>
     </StyledCurrentForecastWrapper>
   );
