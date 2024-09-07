@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 import { UserLocationProps } from './interface';
 import { StyledCountryHeader, StyledUserLocationWrapper, StyledCityHeader, StyledDayHeader } from './styled';
-import { TODAY_TEXT, TONIGHT_TEXT } from '../../../../common/constants';
+import { TODAY_TEXT, TONIGHT_TEXT } from '../../constants';
 
-const UserLocation: React.FC<UserLocationProps> = ({ userLocation, date, isDayTime, onClick }) => {
-  const { city, region, country } = userLocation;
+const MainLocation: React.FC<UserLocationProps> = ({ location, date, isDayTime, clickable, onClick }) => {
+  const { city, region, country } = location;
 
   const dayTitle = useMemo(() => (isDayTime ? TODAY_TEXT : TONIGHT_TEXT), [isDayTime]);
 
@@ -13,14 +13,14 @@ const UserLocation: React.FC<UserLocationProps> = ({ userLocation, date, isDayTi
   };
 
   return (
-    <StyledUserLocationWrapper onClick={handleCityClick}>
+    <StyledUserLocationWrapper clickable={clickable} onClick={handleCityClick}>
       <StyledCityHeader>{city}</StyledCityHeader>
       <StyledCountryHeader>
         {region}, {country}
       </StyledCountryHeader>
-      <StyledDayHeader>{`${dayTitle} ${date}`}</StyledDayHeader>
+      {date && <StyledDayHeader>{`${dayTitle} ${date}`}</StyledDayHeader>}
     </StyledUserLocationWrapper>
   );
 };
 
-export default UserLocation;
+export default MainLocation;

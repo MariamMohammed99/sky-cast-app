@@ -43,6 +43,7 @@ const useWeatherLocationFetch = ({
       }
     }
   }, [weatherData, isDayTime, setBackgroundColor]);
+  
 
   return {
     locationData,

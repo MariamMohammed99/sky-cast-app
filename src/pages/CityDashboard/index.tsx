@@ -13,6 +13,8 @@ import { PageProps } from '../interface';
 import BarChart from './components/BarChart';
 import LineChart from './components/LineChart';
 import Table from './components/Table';
+import MainLocation from '../../common/components/MainLocation';
+import { StyledDashboardContainer, StyledLocationWrapper, StyledDashboardWrapper } from './styled';
 
 const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
   const location = useLocation();
@@ -20,14 +22,14 @@ const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
   const latitude = queryParams.get('latitude');
   const longitude = queryParams.get('longitude');
 
-  const {
-    locationData,
-    loadingCity,
-    errorCity,
-    weatherData,
-    loadingWeather,
-    errorWeather,
-  } = useWeatherAndLocationFetch({latitude, longitude, locationAxiosInstance, weatherAxiosInstance, setBackgroundColor});
+  const { locationData, loadingCity, errorCity, weatherData, loadingWeather, errorWeather, isDayTime } =
+    useWeatherAndLocationFetch({
+      latitude,
+      longitude,
+      locationAxiosInstance,
+      weatherAxiosInstance,
+      setBackgroundColor,
+    });
 
   const historyParams = useMemo(
     () => constructHistoricalWeatherParams(latitude, longitude, 'today'),
@@ -76,17 +78,22 @@ const CityDashboardPage: React.FC<PageProps> = ({ setBackgroundColor }) => {
   if (!historyParams) return <ErrorNotification customizedError={WRONG_URL_ERROR_MESSAGE} />;
   if (errorHistory || errorCity || errorWeather) return <ErrorNotification />;
 
-  if (loadingHistory || loadingCity || loadingWeather) return <Loading size={LOADING_SIZE} />;
+  if (loadingHistory || loadingCity || loadingWeather || !locationData) return <Loading size={LOADING_SIZE} />;
 
   return (
-    <>
+    <StyledDashboardWrapper>
+    <StyledDashboardContainer>
+      <StyledLocationWrapper>
+        <MainLocation location={locationData[0]} isDayTime={isDayTime} clickable={"false"} onClick={() => {}} />
+      </StyledLocationWrapper>
       <h1>My D3 Bar Chart</h1>
       <BarChart data={data} />
       <h1>My D3 Line Chart</h1>
       <LineChart data={temp} />
       <h1>My D3 Table</h1>
       <Table data={table} />
-    </>
+    </StyledDashboardContainer>
+    </StyledDashboardWrapper>
   );
 };
 

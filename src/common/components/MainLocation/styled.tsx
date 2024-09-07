@@ -1,16 +1,21 @@
 import { styled } from 'styled-components';
+import { StyledUserLocationWrapperProps } from './interface';
 
-export const StyledUserLocationWrapper = styled.div`
+export const StyledUserLocationWrapper = styled.div<StyledUserLocationWrapperProps>`
   color: white;
   border-radius: 10px;
   text-align: start;
-  cursor: pointer;
   transition: transform 0.3s;
   flex: 2;
 
-  &:hover {
-    transform: scale(1.12);
-  }
+  ${(props) =>
+    props.clickable === 'true' &&
+    `
+      &:hover {
+        transform: scale(1.07);
+        cursor:'pointer';
+      }
+    `}
 `;
 
 export const StyledCountryHeader = styled.h3`

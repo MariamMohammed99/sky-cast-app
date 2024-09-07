@@ -2,10 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import { convertDate } from '../../../../common/utils/convertDate';
 import Search from '../Search';
 import CurrentForecast from '../CurrentForecast';
-import UserLocation from '../UserLocation';
 import { MainHeadingProps } from './interface';
 import { StyledLandingHeader, StyledLocationSearchWrapper } from './styled';
 import { useMemo } from 'react';
+import MainLocation from '../../../../common/components/MainLocation';
 
 const MainHeading: React.FC<MainHeadingProps> = ({ userLocation, weatherData, latitude, longitude }) => {
   const navigate = useNavigate();
@@ -31,10 +31,11 @@ const MainHeading: React.FC<MainHeadingProps> = ({ userLocation, weatherData, la
   return (
     <StyledLandingHeader>
       <StyledLocationSearchWrapper>
-        <UserLocation
-          userLocation={userLocation[0]}
+        <MainLocation
+          location={userLocation[0]}
           date={convertDate(weatherData.weather[0].date, true)}
           isDayTime
+          clickable={'true'}
           onClick={handleCityClick}
         />
         <Search userLocation={userLocation[0]} />
