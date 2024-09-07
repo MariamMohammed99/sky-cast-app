@@ -21,9 +21,9 @@ describe('Utility Functions', () => {
       const result = constructCurrentWeatherParams(latitude, longitude, forSingleDay, monthlyAvg);
 
       expect(result).toEqual({
-        tp: 1,
+        tp: AVG_TIME_INTERVAL,
         q: '40.7128,-74.006',
-        num_of_days: WEATHER_DAYS_NO,
+        num_of_days: 1,
         mca: 'yes',
         extra: EXTRA_PARAMS_WEATHER,
       });

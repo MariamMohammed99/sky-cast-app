@@ -18,9 +18,9 @@ export const constructCurrentWeatherParams = (
   if (!canBeConverted) return null;
   const mca = monthlyAvg ? 'yes' : 'no';
   return {
-    tp: forSingleDay ? AVG_TIME_INTERVAL : 1,
+    tp: AVG_TIME_INTERVAL,
     q: `${latitude},${longitude}`,
-    num_of_days: WEATHER_DAYS_NO,
+    num_of_days: forSingleDay ? 1: WEATHER_DAYS_NO,
     mca,
     extra: EXTRA_PARAMS_WEATHER,
   };
