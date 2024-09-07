@@ -13,7 +13,7 @@ export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
         font-family: sans-serif;
         display:flex;
         flex-direction:column;
-        gap:40px;
+
         
   }
 `;

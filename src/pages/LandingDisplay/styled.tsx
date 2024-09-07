@@ -6,6 +6,7 @@ export const StyledLandingContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   flex: 1;
+  padding-top:40px;
 `;
 
 export const StyledTemperatureContainer = styled.div`
