@@ -19,7 +19,7 @@ const App: React.FC = () => {
         <TitleBar />
         <Routes>
           <Route path="/" element={<LandingDisplayPage setBackgroundColor={setBackgroundColor} />} />
-          <Route path="/dashboard" element={<CityDashboardPage />} />
+          <Route path="/dashboard" element={<CityDashboardPage setBackgroundColor={setBackgroundColor}/>} />
           <Route path="*" element={<ErrorNotification customizedError={WRONG_URL_ERROR_MESSAGE} />} />
         </Routes>
         </>
