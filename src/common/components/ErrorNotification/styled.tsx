@@ -19,7 +19,6 @@ export const StyledErrorImg = styled.img`
   width: 200px;
   color: white;
   text-align: center;
-  mix-blend-mode: lighten;
 
   @media (max-width: 571px) {
     width: 150px;
