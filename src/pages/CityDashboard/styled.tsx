@@ -36,8 +36,8 @@ export const StyledChartWrapper = styled.div<Omit<StyledBackgroundProps, 'backgr
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   height: max-content;
   width: 100%;
-  max-width:50vw;
-  padding:20px;
+  max-width: 50vw;
+  padding: 20px;
 `;
 
 export const StyledChartHeader = styled.h3``;

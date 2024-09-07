@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
-import { StyledBackgroundProps } from '../../../interface';
+import { StyledBackgroundProps } from '../../../pages/interface';
 
-export const StyledDailyForecastWrapper = styled.div<Omit<StyledBackgroundProps, 'backgroundColor'>>`
+export const StyledCurrentForecastWrapper = styled.div<Omit<StyledBackgroundProps, 'backgroundColor'>>`
   background-color: ${(props) => props.theme.backgroundColor};
   border-radius: 8px;
   text-align: center;
@@ -29,7 +29,7 @@ export const StyledImageWrapper = styled.div`
   margin: 0 auto;
 `;
 
-export const StyledDailyForecastContent = styled.div`
+export const StyledCurrentForecastContent = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;

@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import { DAY_COLOR, NIGHT_COLOR } from '../../../../common/constants';
+import { DAY_COLOR, NIGHT_COLOR } from '../../constants';
 import { CurrentForecastProps } from './interface';
 import {
-  StyledDailyForecastContent,
-  StyledDailyForecastWrapper,
+  StyledCurrentForecastContent,
+  StyledCurrentForecastWrapper,
   StyledDayTitle,
   StyledImageWrapper,
   StyledTemperature,
@@ -13,8 +13,8 @@ const CurrentForecast: React.FC<CurrentForecastProps> = ({ minTemp, maxTemp, ima
   const backgroundColor = useMemo(() => (isDayTime ? DAY_COLOR : NIGHT_COLOR), [isDayTime]);
 
   return (
-    <StyledDailyForecastWrapper style={{ backgroundColor }}>
-      <StyledDailyForecastContent>
+    <StyledCurrentForecastWrapper style={{ backgroundColor }}>
+      <StyledCurrentForecastContent>
         <StyledDayTitle>{weekName}</StyledDayTitle>
         <StyledImageWrapper>
           <img src={image} alt={description} />
@@ -22,8 +22,8 @@ const CurrentForecast: React.FC<CurrentForecastProps> = ({ minTemp, maxTemp, ima
         <StyledTemperature>{description}</StyledTemperature>
         <StyledTemperature>{minTemp}°C</StyledTemperature>
         <StyledTemperature>{maxTemp}°C</StyledTemperature>
-      </StyledDailyForecastContent>
-    </StyledDailyForecastWrapper>
+      </StyledCurrentForecastContent>
+    </StyledCurrentForecastWrapper>
   );
 };
 

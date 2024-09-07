@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { convertDate } from '../../../../common/utils/convertDate';
 import Search from '../Search';
-import CurrentForecast from '../CurrentForecast';
+import CurrentForecast from '../../../../common/components/CurrentForecast';
 import { MainHeadingProps } from './interface';
 import { StyledLandingHeader, StyledLocationSearchWrapper } from './styled';
 import { useMemo } from 'react';
