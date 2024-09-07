@@ -24,7 +24,7 @@ export const SEARCH_DELAY = 1000;
 
 //#region error consts
 
-export const WARNING_ICON_URL = '/assets/icons/warning.jpg';
+export const WARNING_ICON_URL = '/assets/icons/warning.svg';
 export const WARNING_ICON_ALT = 'Error Icon';
 export const LOCATION_PERMISSION_ERROR_MESSAGE =
   'Location permission is denied. Please open your browser settings, grant location access, and try again';
